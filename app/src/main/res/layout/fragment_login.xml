@@ -33,7 +33,7 @@
             android:id="@+id/welcome_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/list_large_dist"
+            android:layout_marginBottom="@dimen/list_medium_dist"
             android:text="@string/welcome"
             android:textColor="@color/primary_blue"
             android:textSize="@dimen/heading_size"
@@ -64,7 +64,7 @@
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/list_large_dist"
+            android:layout_marginTop="@dimen/list_medium_dist"
             android:backgroundTint="@color/primary_blue"
             android:text="@string/log_in" />
 
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="@string/sign_up"
+                android:text="@string/sign_up_link"
                 android:textColor="@color/primary_blue" />
         </LinearLayout>
     </LinearLayout>

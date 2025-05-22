@@ -79,7 +79,7 @@
             android:id="@+id/sing_up_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/list_large_dist"
+            android:layout_marginTop="@dimen/list_medium_dist"
             android:backgroundTint="@color/primary_blue"
             android:text="@string/sign_up" />
 
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="@string/log_in"
+                android:text="@string/log_in_link"
                 android:textColor="@color/primary_blue" />
         </LinearLayout>
     </LinearLayout>

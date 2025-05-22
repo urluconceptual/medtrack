@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="list_small_dist">16dp</dimen>
-    <dimen name="list_large_dist">40dp</dimen>
+    <dimen name="list_medium_dist">40dp</dimen>
+    <dimen name="list_large_dist">88dp</dimen>
     <dimen name="bottom_margin">16dp</dimen>
     <dimen name="heading_size">24sp</dimen>
 </resources>
