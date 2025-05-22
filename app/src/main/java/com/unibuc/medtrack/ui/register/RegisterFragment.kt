@@ -4,12 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.RadioGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputEditText
 import com.unibuc.medtrack.R
+import com.unibuc.medtrack.data.models.SignUpResponse
+import com.unibuc.medtrack.data.models.UserType
+import dagger.hilt.android.AndroidEntryPoint
 
-class RegisterFragment: Fragment() {
+@AndroidEntryPoint
+class RegisterFragment : Fragment() {
+    private val viewModel by viewModels<RegisterViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -18,17 +29,41 @@ class RegisterFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupListeners()
+        setupObservables()
+    }
 
-        view.findViewById<TextView>(R.id.login_text).setOnClickListener {
+    private fun setupListeners() {
+        requireView().findViewById<TextView>(R.id.login_text).setOnClickListener {
             goToLoginFragment()
         }
 
-        view.findViewById<TextView>(R.id.signup_button).setOnClickListener {
+        requireView().findViewById<androidx.appcompat.widget.AppCompatImageButton>(R.id.back_button_register)
+            .setOnClickListener {
+                goToOnboardingPage()
+            }
+
+        requireView().findViewById<Button>(R.id.sing_up_button).setOnClickListener {
             doSignUp()
         }
+    }
 
-        view.findViewById<TextView>(R.id.back_button).setOnClickListener {
-            goToOnboardingPage()
+    private fun setupObservables() {
+        viewModel.isSignUpSuccessful.observe(viewLifecycleOwner) {
+            when (it) {
+                SignUpResponse.SUCCESS -> {
+                    Toast.makeText(requireContext(), "Sign-up successful!", Toast.LENGTH_SHORT).show()
+                    val action = RegisterFragmentDirections.actionRegisterFragmentToHomeGraph()
+                    findNavController().navigate(action)
+                }
+                SignUpResponse.EMAIL_TAKEN -> {
+                    Toast.makeText(requireContext(), "Email already taken", Toast.LENGTH_SHORT).show()
+                }
+                SignUpResponse.EMPTY_FIELDS -> {
+                    Toast.makeText(requireContext(), "Please fill out all fields", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
         }
     }
 
@@ -38,8 +73,30 @@ class RegisterFragment: Fragment() {
     }
 
     private fun doSignUp() {
-        val action = RegisterFragmentDirections.actionRegisterFragmentToHomeGraph()
-        findNavController().navigate(action)
+        val name = requireView()
+            .findViewById<TextInputEditText>(R.id.name_input)
+            .text.toString()
+            .trim()
+        val email = requireView()
+            .findViewById<TextInputEditText>(R.id.email_input)
+            .text
+            .toString()
+            .trim()
+        val password = requireView()
+            .findViewById<TextInputEditText>(R.id.password_input)
+            .text
+            .toString()
+        val selectedRadioId = requireView()
+            .findViewById<RadioGroup>(R.id.radioGroup)
+            .checkedRadioButtonId
+
+        val accountType = when (selectedRadioId) {
+            R.id.radioOptionDoctor -> UserType.DOCTOR
+            R.id.radioOptionPatient -> UserType.PATIENT
+            else -> null
+        }
+
+        viewModel.submitSignUpForm(name, email, password, accountType)
     }
 
     private fun goToOnboardingPage() {

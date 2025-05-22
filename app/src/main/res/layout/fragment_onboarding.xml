@@ -14,8 +14,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
-        app:layout_constraintWidth_percent="0.6">
+        app:layout_constraintVertical_bias="0.85"
+        app:layout_constraintWidth_percent="0.7">
 
         <ImageView
             android:layout_width="160dp"
@@ -37,12 +37,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="@dimen/text_size"
             android:text="@string/slogan1" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="@dimen/text_size"
             android:text="@string/slogan2" />
 
         <Button
@@ -51,13 +53,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/list_large_dist"
             android:backgroundTint="@color/primary_blue"
+            android:textSize="@dimen/text_size"
             android:text="@string/log_in" />
         <Button
             android:id="@+id/signup_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/list_smallest_dist"
             android:backgroundTint="@color/secondary_blue"
             android:textColor="@color/primary_blue"
+            android:textSize="@dimen/text_size"
             android:text="@string/sign_up" />
     </LinearLayout>
 

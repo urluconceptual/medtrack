@@ -9,11 +9,25 @@ import com.unibuc.medtrack.data.models.UserModel
 @Dao
 interface UsersDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(users: List<UserModel>)
+    suspend fun insert(users: UserModel)
 
     @Query("""
         SELECT *
         FROM users
     """)
     suspend fun getAll(): List<UserModel>
+
+    @Query("""
+        SELECT *
+        FROM users
+        WHERE email = :email
+    """)
+    suspend fun getByEmail(email: String): UserModel?
+
+    @Query("""
+        SELECT *
+        FROM users
+        WHERE email = :email AND password = :password
+    """)
+    suspend fun checkEmailAndPassword(email: String, password: String): UserModel?
 }

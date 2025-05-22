@@ -3,9 +3,11 @@ package com.unibuc.medtrack
 import android.app.Application
 import androidx.room.Room
 import com.unibuc.medtrack.data.AppDatabase
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class ApplicationController : Application() {
-    lateinit var appDatabase: AppDatabase
+    private lateinit var appDatabase: AppDatabase
 
     companion object {
         var instance: ApplicationController? = null
