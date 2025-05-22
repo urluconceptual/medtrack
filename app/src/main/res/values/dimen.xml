@@ -5,4 +5,5 @@
     <dimen name="list_large_dist">88dp</dimen>
     <dimen name="bottom_margin">16dp</dimen>
     <dimen name="heading_size">24sp</dimen>
+    <dimen name="input_height">40sp</dimen>
 </resources>

@@ -26,6 +26,10 @@ class LoginFragment: Fragment() {
         view.findViewById<TextView>(R.id.login_button).setOnClickListener {
             doLogin()
         }
+
+        view.findViewById<TextView>(R.id.back_button).setOnClickListener {
+            goToOnboardingPage()
+        }
     }
 
     private fun goToRegisterFragment() {
@@ -35,6 +39,11 @@ class LoginFragment: Fragment() {
 
     private fun doLogin() {
         val action = LoginFragmentDirections.actionLoginFragmentToHomeGraph()
+        findNavController().navigate(action)
+    }
+
+    private fun goToOnboardingPage() {
+        val action = LoginFragmentDirections.actionLoginFragmentToOnboardingFragment()
         findNavController().navigate(action)
     }
 }
