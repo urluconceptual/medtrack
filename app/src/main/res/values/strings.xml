@@ -21,4 +21,12 @@
     <string name="patient">Patient</string>
     <string name="password">Password</string>
     <string name="mobile_number">Mobile Number</string>
+    <string name="monday">MON</string>
+    <string name="tuesday">TUE</string>
+    <string name="wednesday">WED</string>
+    <string name="thursday">THU</string>
+    <string name="friday">FRI</string>
+    <string name="saturday">SAT</string>
+    <string name="sunday">SUN</string>
+    <string name="dummy_actual_date">Today is May 20, 2025.</string>
 </resources>

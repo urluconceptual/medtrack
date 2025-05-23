@@ -5,4 +5,5 @@
     <color name="primary_blue">#2260FF</color>
     <color name="secondary_blue">#CAD6FF</color>
     <color name="light_blue">#ECF1FF</color>
+    <color name="accent_blue">#3B68FF</color>
 </resources>
