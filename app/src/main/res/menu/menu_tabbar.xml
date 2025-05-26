@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tabbar_home"
+        android:title="@string/tabbar_home"
+        android:icon="@drawable/ic_tabbar_home"/>
+
+    <item
+        android:id="@+id/tabbar_messages"
+        android:title="@string/tabbar_messages"
+        android:icon="@drawable/ic_tabbar_messages"/>
+
+    <item
+        android:id="@+id/tabbar_calendar"
+        android:title="@string/tabbar_calendar"
+        android:icon="@drawable/ic_tabbar_calendar"/>
+
+</menu>

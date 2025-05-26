@@ -6,6 +6,7 @@
     app:startDestination="@id/onboardingFragment">
 
     <include app:graph="@navigation/doctor_navigation" />
+    <include app:graph="@navigation/patient_navigation" />
 
     <fragment
         android:id="@+id/onboardingFragment"

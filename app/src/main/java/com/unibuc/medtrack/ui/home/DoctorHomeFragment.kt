@@ -30,13 +30,12 @@ class DoctorHomeFragment : Fragment() {
     private fun setupData() {
         setupGreeting()
         setupCurrentDate()
-        setupDaysOfTheWeek()
     }
 
     private fun setupGreeting() {
         val greetingTextView = requireView().findViewById<TextView>(R.id.greeting_text)
         val userName = "John Doe"
-        greetingTextView.text = "Hello, $userName!"
+        greetingTextView.text = "Hello, Dr. $userName!"
     }
 
     private fun setupCurrentDate() {
@@ -46,47 +45,5 @@ class DoctorHomeFragment : Fragment() {
         val formattedDate = dateFormat.format(currentDate)
 
         dateTextView.text = "Today is $formattedDate"
-    }
-
-    private fun setupDaysOfTheWeek() {
-        val today = LocalDate.now()
-
-        for (i in 0..6) {
-            val daysToAdd = i - today.dayOfWeek.value + 1L
-            val date = today.plusDays(daysToAdd)
-
-            val dayNumberId = resources.getIdentifier(
-                "day_number_${date.dayOfWeek.name.lowercase()}",
-                "id",
-                requireContext().packageName
-            )
-
-            val textView = requireView().findViewById<TextView>(dayNumberId)
-            textView?.text = date.dayOfMonth.toString()
-
-            if (daysToAdd == 0L) {
-                setupStyleOfCurrentDay(date)
-            }
-        }
-    }
-
-    private fun setupStyleOfCurrentDay(date: LocalDate) {
-        val dayContainerId = resources.getIdentifier(
-            "day_container_${date.dayOfWeek.name.lowercase()}",
-            "id",
-            requireContext().packageName
-        )
-
-        val linearLayout = requireView().findViewById<LinearLayout>(dayContainerId)
-        val tintColor = ContextCompat.getColor(requireContext(), R.color.primary_blue)
-
-        linearLayout.backgroundTintList = ColorStateList.valueOf(tintColor)
-
-        for (i in 0 until linearLayout.childCount) {
-            val view = linearLayout.getChildAt(i)
-            if (view is TextView) {
-                view.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            }
-        }
     }
 }
