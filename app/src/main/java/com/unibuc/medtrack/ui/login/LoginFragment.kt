@@ -49,6 +49,9 @@ class LoginFragment: Fragment() {
         viewModel.isLoginSuccessful.observe(viewLifecycleOwner) {
             when (it) {
                 LoginResponse.SUCCESS -> {
+                    val tabbarFragment = requireActivity().findViewById<View>(R.id.tabbar_fragment)
+                    tabbarFragment.visibility = View.VISIBLE
+
                     val action = LoginFragmentDirections.actionLoginFragmentToHomeGraph()
                     findNavController().navigate(action)
                 }

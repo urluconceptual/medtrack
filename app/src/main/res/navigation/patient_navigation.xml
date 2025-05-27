@@ -9,6 +9,25 @@
         android:id="@+id/patientHomeFragment"
         android:name="com.unibuc.medtrack.ui.home.PatientHomeFragment"
         android:label="Patient Home"
-        tools:layout="@layout/fragment_patient_home" />
+        tools:layout="@layout/fragment_patient_home">
+
+        <action
+            android:id="@+id/action_patientHomeFragment_to_patientCalendarFragment"
+            app:destination="@id/patientCalendarFragment" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/patientCalendarFragment"
+        android:name="com.unibuc.medtrack.ui.home.PatientCalendarFragment"
+        android:label="Patient Calendar"
+        tools:layout="@layout/fragment_patient_calendar">
+
+        <action
+            android:id="@+id/action_patientCalendarFragment_to_patientHomeFragment"
+            app:destination="@id/patientHomeFragment" />
+
+    </fragment>
 
 </navigation>

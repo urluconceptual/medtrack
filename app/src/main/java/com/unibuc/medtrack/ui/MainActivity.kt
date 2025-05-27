@@ -5,11 +5,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.unibuc.medtrack.R
+import com.unibuc.medtrack.ui.home.PatientCalendarFragmentDirections
+import com.unibuc.medtrack.ui.home.PatientHomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -19,9 +24,66 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        //  Padding for a BottomNavigationView bar can only be removed in kt..
+        val tabbar =
+            findViewById<BottomNavigationView>(R.id.tabbar)
+        ViewCompat.setOnApplyWindowInsetsListener(tabbar) { view, insets ->
+            view.setPadding(0, 0, 0, 0)
+            insets
+        }
+
+        setupListeners()
     }
 
+    //  TODO - When/if "log out" functionality is added, the tabbar (bottom navigation view)
+    //         fragment should have its visibility changed back to "GONE", to not be visible
+    //         in the Onboarding / Login / Register fragments.
     fun logIn() {
         //TODO log in
+    }
+
+    private fun setupListeners() {
+        val bottomNav = findViewById<BottomNavigationView>(R.id.tabbar)
+
+        //  TODO - Redirect to different fragments based on current user's type
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.tabbar_home -> {
+                    goToPatientHomeFragment()
+                    true
+                }
+
+                R.id.tabbar_messages -> {
+                    //  W.I.P.
+                    true
+                }
+
+                R.id.tabbar_calendar -> {
+                    goToPatientCalendarFragment()
+                    true
+                }
+
+                else -> false
+            }
+        }
+    }
+
+    private fun goToPatientCalendarFragment() {
+        val action = PatientHomeFragmentDirections.actionPatientHomeFragmentToPatientCalendarFragment()
+
+        val navController = this.findNavController(R.id.nav_host_fragment_container)
+
+        if (navController.currentDestination?.id != R.id.patientCalendarFragment)
+            navController.navigate(action)
+    }
+
+    private fun goToPatientHomeFragment() {
+        val action = PatientCalendarFragmentDirections.actionPatientCalendarFragmentToPatientHomeFragment()
+
+        val navController = this.findNavController(R.id.nav_host_fragment_container)
+
+        if (navController.currentDestination?.id != R.id.patientHomeFragment)
+            navController.navigate(action)
     }
 }

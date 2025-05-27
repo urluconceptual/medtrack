@@ -57,6 +57,9 @@ class RegisterFragment : Fragment() {
                 SignUpResponse.SUCCESS -> {
                     Toast.makeText(requireContext(), "Sign-up successful!", Toast.LENGTH_SHORT).show()
 
+                    val tabbarFragment = requireActivity().findViewById<View>(R.id.tabbar_fragment)
+                    tabbarFragment.visibility = View.VISIBLE
+
                     val navOptions = NavOptions.Builder()
                         .setPopUpTo(R.id.authentication_navigation, inclusive = true)
                         .setLaunchSingleTop(true)

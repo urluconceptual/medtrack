@@ -11,6 +11,6 @@
     </style>
 
     <style name="MedTrack.Tabbar" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">@color/mid_blue</item>
+        <item name="android:color">@color/accent_blue</item>
     </style>
 </resources>

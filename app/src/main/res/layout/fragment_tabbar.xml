@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/tabbar"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_margin="16dp"
         android:minHeight="56dp"
-
+        android:layout_margin="16dp"
         android:background="@drawable/shape_rounded"
+
         app:itemIconTint="@color/white"
         app:itemActiveIndicatorStyle="@style/MedTrack.Tabbar"
-
         app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_tabbar" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

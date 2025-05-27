@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.unibuc.medtrack.R
 import java.text.SimpleDateFormat
@@ -26,12 +25,6 @@ class PatientHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupData()
-
-        val tabbar = requireView().findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.tabbar)
-        ViewCompat.setOnApplyWindowInsetsListener(tabbar) { view, insets ->
-            view.setPadding(0, 0, 0, 0)
-            insets
-        }
     }
 
     private fun setupData() {
