@@ -12,7 +12,26 @@
         tools:layout="@layout/fragment_patient_home">
 
         <action
+            android:id="@+id/action_patientHomeFragment_to_patientChatsFragment"
+            app:destination="@id/patientChatsFragment" />
+        <action
             android:id="@+id/action_patientHomeFragment_to_patientCalendarFragment"
+            app:destination="@id/patientCalendarFragment" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/patientChatsFragment"
+        android:name="com.unibuc.medtrack.ui.home.PatientChatsFragment"
+        android:label="Patient Chats"
+        tools:layout="@layout/fragment_patient_chats">
+
+        <action
+            android:id="@+id/action_patientChatsFragment_to_patientHomeFragment"
+            app:destination="@id/patientHomeFragment" />
+        <action
+            android:id="@+id/action_patientChatsFragment_to_patientCalendarFragment"
             app:destination="@id/patientCalendarFragment" />
 
     </fragment>
@@ -27,6 +46,9 @@
         <action
             android:id="@+id/action_patientCalendarFragment_to_patientHomeFragment"
             app:destination="@id/patientHomeFragment" />
+        <action
+            android:id="@+id/action_patientCalendarFragment_to_patientChatsFragment"
+            app:destination="@id/patientChatsFragment" />
 
     </fragment>
 

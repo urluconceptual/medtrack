@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.unibuc.medtrack.R
 import com.unibuc.medtrack.ui.home.PatientCalendarFragmentDirections
+import com.unibuc.medtrack.ui.home.PatientChatsFragmentDirections
 import com.unibuc.medtrack.ui.home.PatientHomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,44 +48,32 @@ class MainActivity : AppCompatActivity() {
     private fun setupListeners() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.tabbar)
 
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+        val navController = navHostFragment.navController
+
         //  TODO - Redirect to different fragments based on current user's type
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.tabbar_home -> {
-                    goToPatientHomeFragment()
+                    if (navController.currentDestination?.id != R.id.patientHomeFragment)
+                        navController.navigate(R.id.patientHomeFragment)
                     true
                 }
 
                 R.id.tabbar_messages -> {
-                    //  W.I.P.
+                    if (navController.currentDestination?.id != R.id.patientChatsFragment)
+                        navController.navigate(R.id.patientChatsFragment)
                     true
                 }
 
                 R.id.tabbar_calendar -> {
-                    goToPatientCalendarFragment()
+                    if (navController.currentDestination?.id != R.id.patientCalendarFragment)
+                        navController.navigate(R.id.patientCalendarFragment)
                     true
                 }
 
                 else -> false
             }
         }
-    }
-
-    private fun goToPatientCalendarFragment() {
-        val action = PatientHomeFragmentDirections.actionPatientHomeFragmentToPatientCalendarFragment()
-
-        val navController = this.findNavController(R.id.nav_host_fragment_container)
-
-        if (navController.currentDestination?.id != R.id.patientCalendarFragment)
-            navController.navigate(action)
-    }
-
-    private fun goToPatientHomeFragment() {
-        val action = PatientCalendarFragmentDirections.actionPatientCalendarFragmentToPatientHomeFragment()
-
-        val navController = this.findNavController(R.id.nav_host_fragment_container)
-
-        if (navController.currentDestination?.id != R.id.patientHomeFragment)
-            navController.navigate(action)
     }
 }

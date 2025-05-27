@@ -1,7 +1,6 @@
 package com.unibuc.medtrack.adapters
 
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +54,7 @@ class CalendarAdapter(
                     }
                     thisDay.equals(today) -> {
                         dayText.setTextColor(Color.WHITE)
-                        dayText.setBackgroundResource(R.drawable.shape_rounded)
+                        dayText.setBackgroundResource(R.drawable.shape_rounded_blue)
                     }
                     else -> {
                         dayText.setTextColor(Color.BLACK)

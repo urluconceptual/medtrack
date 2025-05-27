@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:minHeight="56dp"
         android:layout_margin="16dp"
-        android:background="@drawable/shape_rounded"
+        android:background="@drawable/shape_rounded_blue"
 
         app:itemIconTint="@color/white"
         app:itemActiveIndicatorStyle="@style/MedTrack.Tabbar"
