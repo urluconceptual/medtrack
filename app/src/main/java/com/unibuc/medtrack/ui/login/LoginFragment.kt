@@ -52,7 +52,7 @@ class LoginFragment: Fragment() {
                     val tabbarFragment = requireActivity().findViewById<View>(R.id.tabbar_fragment)
                     tabbarFragment.visibility = View.VISIBLE
 
-                    val action = LoginFragmentDirections.actionLoginFragmentToHomeGraph()
+                    val action = LoginFragmentDirections.actionLoginFragmentToHomeGraphPatient()
                     findNavController().navigate(action)
                 }
                 LoginResponse.WRONG_CREDENTIALS -> {

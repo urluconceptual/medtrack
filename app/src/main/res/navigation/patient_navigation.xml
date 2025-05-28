@@ -34,6 +34,21 @@
             android:id="@+id/action_patientChatsFragment_to_patientCalendarFragment"
             app:destination="@id/patientCalendarFragment" />
 
+        <action
+            android:id="@+id/action_patientChatsFragment_to_patientChatConversationFragment"
+            app:destination="@id/patientChatConversationFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/patientChatConversationFragment"
+        android:name="com.unibuc.medtrack.ui.home.PatientChatConversationFragment"
+        android:label="Patient Chat Conversation"
+        tools:layout="@layout/fragment_patient_chat_conversation">
+
+        <action
+            android:id="@+id/action_patientChatConversationFragment_to_patientChatsFragment"
+            app:destination="@id/patientChatsFragment" />
+
     </fragment>
 
 

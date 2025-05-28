@@ -5,13 +5,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.unibuc.medtrack.R
-import com.unibuc.medtrack.ui.home.PatientCalendarFragmentDirections
-import com.unibuc.medtrack.ui.home.PatientChatsFragmentDirections
-import com.unibuc.medtrack.ui.home.PatientHomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
