@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.unibuc.medtrack.data.models.SignUpResponse
 import com.unibuc.medtrack.data.models.UserModel
 import com.unibuc.medtrack.data.models.UserType
+import com.unibuc.medtrack.data.models.DoctorModel
 import com.unibuc.medtrack.data.repositories.users.UsersRepository
+import com.unibuc.medtrack.data.repositories.doctors.DoctorsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val usersRepository: UsersRepository
+    private val usersRepository: UsersRepository,
+    private val doctorsRepository: DoctorsRepository
 ) : ViewModel() {
     private val _isSignUpSuccessful = MutableLiveData<SignUpResponse>()
     val isSignUpSuccessful: LiveData<SignUpResponse> get() = _isSignUpSuccessful
@@ -41,8 +44,19 @@ class RegisterViewModel @Inject constructor(
                 _isSignUpSuccessful.value = SignUpResponse.EMAIL_TAKEN
                 return@launch
             }
+            
             withContext(Dispatchers.IO) {
-                usersRepository.insert(UserModel(id, name, email, password, accountType))
+                val user = UserModel(id, name, email, password, accountType)
+                usersRepository.insert(user)
+
+                if (accountType == UserType.DOCTOR) {
+                    val doctor = DoctorModel(
+                        id = UUID.randomUUID().toString(),
+                        userId = UUID.fromString(id),
+                        specialty = "General Medicine"
+                    )
+                    doctorsRepository.insert(doctor)
+                }
             }
             _isSignUpSuccessful.value = SignUpResponse.SUCCESS
         }
