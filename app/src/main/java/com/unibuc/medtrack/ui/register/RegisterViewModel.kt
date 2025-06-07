@@ -8,8 +8,10 @@ import com.unibuc.medtrack.data.models.SignUpResponse
 import com.unibuc.medtrack.data.models.UserModel
 import com.unibuc.medtrack.data.models.UserType
 import com.unibuc.medtrack.data.models.DoctorModel
+import com.unibuc.medtrack.data.models.PatientModel
 import com.unibuc.medtrack.data.repositories.users.UsersRepository
 import com.unibuc.medtrack.data.repositories.doctors.DoctorsRepository
+import com.unibuc.medtrack.data.repositories.patients.PatientsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val usersRepository: UsersRepository,
-    private val doctorsRepository: DoctorsRepository
+    private val doctorsRepository: DoctorsRepository,
+    private val patientsRepository: PatientsRepository
 ) : ViewModel() {
     private val _isSignUpSuccessful = MutableLiveData<SignUpResponse>()
     val isSignUpSuccessful: LiveData<SignUpResponse> get() = _isSignUpSuccessful
@@ -32,7 +35,7 @@ class RegisterViewModel @Inject constructor(
         accountType: UserType?
     ) {
         viewModelScope.launch {
-            val id = UUID.randomUUID().toString()
+            val id = UUID.randomUUID()
             if (name.isNullOrBlank() || email.isNullOrBlank() || password.isNullOrBlank() || accountType == null) {
                 _isSignUpSuccessful.value = SignUpResponse.EMPTY_FIELDS
                 return@launch
@@ -46,16 +49,27 @@ class RegisterViewModel @Inject constructor(
             }
             
             withContext(Dispatchers.IO) {
-                val user = UserModel(id, name, email, password, accountType)
+                val user = UserModel(id.toString(), name, email, password, accountType)
                 usersRepository.insert(user)
-
-                if (accountType == UserType.DOCTOR) {
-                    val doctor = DoctorModel(
-                        id = UUID.randomUUID().toString(),
-                        userId = UUID.fromString(id),
-                        specialty = "General Medicine"
-                    )
-                    doctorsRepository.insert(doctor)
+                
+                when (accountType) {
+                    UserType.DOCTOR -> {
+                        val doctor = DoctorModel(
+                            id = UUID.randomUUID().toString(),
+                            userId = id,
+                            specialty = "General Medicine"
+                        )
+                        doctorsRepository.insert(doctor)
+                    }
+                    UserType.PATIENT -> {
+                        val patient = PatientModel(
+                            id = UUID.randomUUID().toString(),
+                            userId = id,
+                            dateOfBirth = "",
+                            phoneNumber = ""
+                        )
+                        patientsRepository.insert(patient)
+                    }
                 }
             }
             _isSignUpSuccessful.value = SignUpResponse.SUCCESS
