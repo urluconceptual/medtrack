@@ -4,6 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import com.unibuc.medtrack.data.repositories.users.UsersRepository
 import com.unibuc.medtrack.data.repositories.users.UsersRepositoryLocal
+import com.unibuc.medtrack.data.repositories.doctors.DoctorsRepository
+import com.unibuc.medtrack.data.repositories.doctors.DoctorsRepositoryLocal
+import com.unibuc.medtrack.data.repositories.patients.PatientsRepository
+import com.unibuc.medtrack.data.repositories.patients.PatientsRepositoryLocal
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,5 +32,13 @@ class AppDatabaseAdapter {
 
     @Provides
     @Singleton
-    fun provideUsersRepository(appDatabase: AppDatabase): UsersRepository = UsersRepositoryLocal(appDatabase.usersDao)
+    fun provideUsersRepository(appDatabase: AppDatabase): UsersRepository = UsersRepositoryLocal(appDatabase.usersDao, appDatabase.doctorsDao, appDatabase.patientsDao)
+
+    @Provides
+    @Singleton
+    fun provideDoctorsRepository(appDatabase: AppDatabase): DoctorsRepository = DoctorsRepositoryLocal(appDatabase.doctorsDao)
+
+    @Provides
+    @Singleton
+    fun providePatientsRepository(appDatabase: AppDatabase): PatientsRepository = PatientsRepositoryLocal(appDatabase.patientsDao)
 }

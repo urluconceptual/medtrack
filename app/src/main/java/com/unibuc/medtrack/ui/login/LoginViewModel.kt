@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.unibuc.medtrack.data.SessionManager
 import com.unibuc.medtrack.data.models.LoginResponse
 import com.unibuc.medtrack.data.models.UserModel
 import com.unibuc.medtrack.data.models.UserType
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val usersRepository: UsersRepository
+    private val usersRepository: UsersRepository,
+    private val sessionManager: SessionManager
 ) : ViewModel() {
     private val _isLoginSuccessful = MutableLiveData<LoginResponse>()
     val isLoginSuccessful: LiveData<LoginResponse> get() = _isLoginSuccessful
@@ -39,6 +41,8 @@ class LoginViewModel @Inject constructor(
                 return@launch
             }
             _isLoginSuccessful.value = LoginResponse.SUCCESS
+            sessionManager.saveUserEmail(email)
+
         }
     }
 }

@@ -5,22 +5,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.unibuc.medtrack.R
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
 import java.util.Locale
+import androidx.navigation.fragment.findNavController
+import com.unibuc.medtrack.data.models.UserType
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DoctorHomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_doctor_home, container, false)
+
+    private val userViewModel: DoctorHomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,12 +39,15 @@ class DoctorHomeFragment : Fragment() {
         setupGreeting()
         setupCurrentDate()
         setupDaysOfTheWeek()
+        setupProfileNavigation()
     }
 
     private fun setupGreeting() {
         val greetingTextView = requireView().findViewById<TextView>(R.id.greeting_text)
-        val userName = "John Doe"
-        greetingTextView.text = "Hello, $userName!"
+        userViewModel.loadUserName()
+        userViewModel.userName.observe(viewLifecycleOwner) { name ->
+            greetingTextView.text = "Hello, $name!"
+        }
     }
 
     private fun setupCurrentDate() {
@@ -87,6 +98,31 @@ class DoctorHomeFragment : Fragment() {
             if (view is TextView) {
                 view.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
+        }
+    }
+
+    private fun setupProfileNavigation(){
+        val profileButton = requireView().findViewById<Button>(R.id.btnProfile)
+        profileButton.setOnClickListener {
+            userViewModel.loadRole()
+            userViewModel.role.observe(viewLifecycleOwner) { role ->
+                when (role) {
+                    UserType.DOCTOR -> {
+                        val action = DoctorHomeFragmentDirections.actionHomeFragmentToProfileFragment()
+                        findNavController().navigate(action)
+                    }
+                    UserType.PATIENT -> {
+                        val action = DoctorHomeFragmentDirections.actionHomeFragmentToPatientProfileFragment()
+                        findNavController().navigate(action)
+                    }
+                    else -> {
+                        // Optionally handle unknown or null role
+                    }
+                }
+            }
+
+
+
         }
     }
 }
