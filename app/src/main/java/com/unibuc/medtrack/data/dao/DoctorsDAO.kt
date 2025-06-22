@@ -27,7 +27,7 @@ interface DoctorsDAO {
     suspend fun getDoctorById(doctorId: String): DoctorModel?
 
     @Query("SELECT * FROM doctors WHERE userId = :userId")
-    suspend fun getDoctorByUserId(userId: UUID): DoctorModel?
+    suspend fun getDoctorByUserId(userId: String): DoctorModel?
 
     @Query("SELECT * FROM doctors WHERE specialty = :specialty")
     suspend fun getDoctorsBySpecialty(specialty: String): List<DoctorModel>

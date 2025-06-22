@@ -10,5 +10,23 @@
         android:name="com.unibuc.medtrack.ui.home.DoctorHomeFragment"
         android:label="Doctor Home"
         tools:layout="@layout/fragment_doctor_home" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_patientProfileFragment"
+            app:destination="@id/patientProfileFragment" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.unibuc.medtrack.ui.profile.DoctorProfileFragment"
+        android:label="Profile" />
+
+    <fragment
+        android:id="@+id/patientProfileFragment"
+        android:name="com.unibuc.medtrack.ui.profile.PatientProfileFragment"
+        android:label="Patient Profile" />
+
+
 
 </navigation>

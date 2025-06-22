@@ -8,7 +8,7 @@ import java.util.UUID
 data class PatientModel(
     @PrimaryKey
     val id: String,
-    val userId: UUID,
+    val userId: String,
     val dateOfBirth: String,
     val phoneNumber: String
 )

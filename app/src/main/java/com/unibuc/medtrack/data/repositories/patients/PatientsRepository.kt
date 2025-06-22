@@ -6,6 +6,6 @@ import java.util.UUID
 interface PatientsRepository {
     suspend fun insert(patient: PatientModel)
     suspend fun getPatientById(id: String): PatientModel?
-    suspend fun getPatientByUserId(userId: UUID): PatientModel?
+    suspend fun getPatientByUserId(userId: String): PatientModel?
     suspend fun getAllPatients(): List<PatientModel>
 } 

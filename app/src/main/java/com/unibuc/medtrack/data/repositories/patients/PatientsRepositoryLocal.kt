@@ -7,6 +7,6 @@ import java.util.UUID
 class PatientsRepositoryLocal(private val dao: PatientsDAO) : PatientsRepository {
     override suspend fun insert(patient: PatientModel) = dao.insert(patient)
     override suspend fun getPatientById(id: String) = dao.getPatientById(id)
-    override suspend fun getPatientByUserId(userId: UUID) = dao.getPatientByUserId(userId)
+    override suspend fun getPatientByUserId(userId: String) = dao.getPatientByUserId(userId)
     override suspend fun getAllPatients() = dao.getAllPatients()
 } 

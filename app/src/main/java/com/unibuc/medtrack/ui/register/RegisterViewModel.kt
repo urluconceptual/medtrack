@@ -49,14 +49,14 @@ class RegisterViewModel @Inject constructor(
             }
             
             withContext(Dispatchers.IO) {
-                val user = UserModel(id.toString(), name, email, password, accountType)
+                val user = UserModel(id.toString(), email, name, password, accountType)
                 usersRepository.insert(user)
                 
                 when (accountType) {
                     UserType.DOCTOR -> {
                         val doctor = DoctorModel(
                             id = UUID.randomUUID().toString(),
-                            userId = id,
+                            userId = id.toString(),
                             specialty = "General Medicine"
                         )
                         doctorsRepository.insert(doctor)
@@ -64,9 +64,9 @@ class RegisterViewModel @Inject constructor(
                     UserType.PATIENT -> {
                         val patient = PatientModel(
                             id = UUID.randomUUID().toString(),
-                            userId = id,
-                            dateOfBirth = "",
-                            phoneNumber = ""
+                            userId = id.toString(),
+                            dateOfBirth = "2002-05-23",
+                            phoneNumber = "07722"
                         )
                         patientsRepository.insert(patient)
                     }
