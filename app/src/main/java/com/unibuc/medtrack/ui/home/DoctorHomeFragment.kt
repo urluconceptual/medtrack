@@ -39,7 +39,6 @@ class DoctorHomeFragment : Fragment() {
         setupGreeting()
         setupCurrentDate()
         setupDaysOfTheWeek()
-        setupProfileNavigation()
     }
 
     private fun setupGreeting() {
@@ -98,31 +97,6 @@ class DoctorHomeFragment : Fragment() {
             if (view is TextView) {
                 view.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
-        }
-    }
-
-    private fun setupProfileNavigation(){
-        val profileButton = requireView().findViewById<Button>(R.id.btnProfile)
-        profileButton.setOnClickListener {
-            userViewModel.loadRole()
-            userViewModel.role.observe(viewLifecycleOwner) { role ->
-                when (role) {
-                    UserType.DOCTOR -> {
-                        val action = DoctorHomeFragmentDirections.actionHomeFragmentToProfileFragment()
-                        findNavController().navigate(action)
-                    }
-                    UserType.PATIENT -> {
-                        val action = DoctorHomeFragmentDirections.actionHomeFragmentToPatientProfileFragment()
-                        findNavController().navigate(action)
-                    }
-                    else -> {
-                        // Optionally handle unknown or null role
-                    }
-                }
-            }
-
-
-
         }
     }
 }

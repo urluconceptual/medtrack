@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_patientHomeFragment_to_patientCalendarFragment"
             app:destination="@id/patientCalendarFragment" />
+        <action
+            android:id="@+id/action_patientHomeFragment_to_patientProfileFragment"
+            app:destination="@id/patientProfileFragment" />
 
     </fragment>
 
@@ -66,5 +69,11 @@
             app:destination="@id/patientChatsFragment" />
 
     </fragment>
+
+
+    <fragment
+        android:id="@+id/patientProfileFragment"
+        android:name="com.unibuc.medtrack.ui.profile.PatientProfileFragment"
+        android:label="Patient Profile" />
 
 </navigation>

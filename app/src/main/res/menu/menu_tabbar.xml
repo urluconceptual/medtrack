@@ -16,4 +16,9 @@
         android:title="@string/tabbar_calendar"
         android:icon="@drawable/ic_tabbar_calendar"/>
 
+    <item
+        android:id="@+id/tabbar_profile"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_tabbar_profile"/>
+
 </menu>

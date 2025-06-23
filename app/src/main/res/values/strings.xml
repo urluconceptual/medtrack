@@ -35,4 +35,6 @@
     <string name="todays_treatment">Today\'s Treatment</string>
     <string name="calendar">Calendar</string>
     <string name="chats">Chats</string>
+    <string name="profile_page_title">Profile</string>
+    <string name="profile">Profile</string>
 </resources>

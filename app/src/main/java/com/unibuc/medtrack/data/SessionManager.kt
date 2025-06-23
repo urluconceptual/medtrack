@@ -12,7 +12,7 @@ class SessionManager @Inject constructor(
     private val prefs = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
 
     fun saveUserEmail(email: String) {
-        prefs.edit().putString("email", email).apply()
+        prefs.edit().putString("email", email).commit()
     }
 
     fun getUserEmail(): String? {
