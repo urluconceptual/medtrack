@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/patient_navigation"
+    app:startDestination="@id/patientHomeFragment">
+
+    <fragment
+        android:id="@+id/patientHomeFragment"
+        android:name="com.unibuc.medtrack.ui.home.PatientHomeFragment"
+        android:label="Patient Home"
+        tools:layout="@layout/fragment_patient_home">
+
+        <action
+            android:id="@+id/action_patientHomeFragment_to_patientChatsFragment"
+            app:destination="@id/patientChatsFragment" />
+        <action
+            android:id="@+id/action_patientHomeFragment_to_patientCalendarFragment"
+            app:destination="@id/patientCalendarFragment" />
+        <action
+            android:id="@+id/action_patientHomeFragment_to_patientProfileFragment"
+            app:destination="@id/patientProfileFragment" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/patientChatsFragment"
+        android:name="com.unibuc.medtrack.ui.home.PatientChatsFragment"
+        android:label="Patient Chats"
+        tools:layout="@layout/fragment_patient_chats">
+
+        <action
+            android:id="@+id/action_patientChatsFragment_to_patientHomeFragment"
+            app:destination="@id/patientHomeFragment" />
+        <action
+            android:id="@+id/action_patientChatsFragment_to_patientCalendarFragment"
+            app:destination="@id/patientCalendarFragment" />
+
+        <action
+            android:id="@+id/action_patientChatsFragment_to_patientChatConversationFragment"
+            app:destination="@id/patientChatConversationFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/patientChatConversationFragment"
+        android:name="com.unibuc.medtrack.ui.home.PatientChatConversationFragment"
+        android:label="Patient Chat Conversation"
+        tools:layout="@layout/fragment_patient_chat_conversation">
+
+        <action
+            android:id="@+id/action_patientChatConversationFragment_to_patientChatsFragment"
+            app:destination="@id/patientChatsFragment" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/patientCalendarFragment"
+        android:name="com.unibuc.medtrack.ui.home.PatientCalendarFragment"
+        android:label="Patient Calendar"
+        tools:layout="@layout/fragment_patient_calendar">
+
+        <action
+            android:id="@+id/action_patientCalendarFragment_to_patientHomeFragment"
+            app:destination="@id/patientHomeFragment" />
+        <action
+            android:id="@+id/action_patientCalendarFragment_to_patientChatsFragment"
+            app:destination="@id/patientChatsFragment" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/patientProfileFragment"
+        android:name="com.unibuc.medtrack.ui.profile.PatientProfileFragment"
+        android:label="Patient Profile" />
+
+</navigation>

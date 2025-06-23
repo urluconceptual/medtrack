@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.unibuc.medtrack.data.SessionManager
 import com.unibuc.medtrack.data.models.SignUpResponse
 import com.unibuc.medtrack.data.models.UserModel
 import com.unibuc.medtrack.data.models.UserType
@@ -23,7 +24,8 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val usersRepository: UsersRepository,
     private val doctorsRepository: DoctorsRepository,
-    private val patientsRepository: PatientsRepository
+    private val patientsRepository: PatientsRepository,
+    private val sessionManager: SessionManager
 ) : ViewModel() {
     private val _isSignUpSuccessful = MutableLiveData<SignUpResponse>()
     val isSignUpSuccessful: LiveData<SignUpResponse> get() = _isSignUpSuccessful
@@ -51,6 +53,8 @@ class RegisterViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 val user = UserModel(id.toString(), email, name, password, accountType)
                 usersRepository.insert(user)
+
+                sessionManager.saveUserEmail(email)
                 
                 when (accountType) {
                     UserType.DOCTOR -> {

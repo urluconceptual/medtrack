@@ -24,6 +24,19 @@ class LoginViewModel @Inject constructor(
     private val _isLoginSuccessful = MutableLiveData<LoginResponse>()
     val isLoginSuccessful: LiveData<LoginResponse> get() = _isLoginSuccessful
 
+    private val _role = MutableLiveData<UserType?>()
+    val role: LiveData<UserType?> get() = _role
+    val email = sessionManager.getUserEmail()
+
+    fun loadRole(email: String) {
+        viewModelScope.launch {
+            val role = withContext(Dispatchers.IO) {
+                usersRepository.getByEmail(email)?.role
+            }
+            _role.value = role
+        }
+    }
+
     public fun submitLoginForm(
         email: String?,
         password: String?,
@@ -40,9 +53,8 @@ class LoginViewModel @Inject constructor(
                 _isLoginSuccessful.value = LoginResponse.WRONG_CREDENTIALS
                 return@launch
             }
-            _isLoginSuccessful.value = LoginResponse.SUCCESS
             sessionManager.saveUserEmail(email)
-
+            _isLoginSuccessful.value = LoginResponse.SUCCESS
         }
     }
 }

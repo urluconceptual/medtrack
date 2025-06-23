@@ -9,4 +9,8 @@
         <item name="boxStrokeColor">@color/light_blue</item>
         <item name="boxStrokeWidth">0dp</item>
     </style>
+
+    <style name="MedTrack.Tabbar" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/accent_blue</item>
+    </style>
 </resources>

@@ -21,11 +21,21 @@
             android:text="@string/app_name"
             android:textColor="@color/primary_blue"
             android:textSize="@dimen/h2_size"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintBottom_toTopOf="@id/form_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/calendar"
+            android:textSize="24sp"
+            android:textColor="@color/accent_blue"
+            android:paddingBottom="16dp"
+            android:gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,26 +47,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/greeting_text"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/accent_blue"
-                android:text="@string/hello"
-                android:textSize="@dimen/h2_size" />
+                android:orientation="horizontal"
+                android:layout_gravity="center">
 
-            <TextView
-                android:id="@+id/date_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/accent_blue"
-                android:textSize="@dimen/regular_text_size"
-                android:text="@string/dummy_actual_date"/>
+<!--                TODO - Add buttons for going to previous / next month -->
+                <TextView
+                    android:id="@+id/current_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/accent_blue"
+                    android:textStyle="bold"
+                    android:text="MONTH"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/list_small_dist"
+                android:layout_marginVertical="@dimen/list_small_dist"
+                android:paddingHorizontal="8dp"
                 android:baselineAligned="false"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -65,202 +79,175 @@
                 <LinearLayout
                     android:id="@+id/day_container_monday"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/day_container_height"
-                    android:layout_margin="4dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/day_background"
+                    android:background="@drawable/shape_rounded_blue"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="4dp">
-
-                    <TextView
-                        android:id="@+id/day_number_monday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="20"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/day_text_size"
-                        android:textStyle="bold" />
+                    android:padding="2dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/monday"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/small_text_size" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/day_container_tuesday"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/day_container_height"
-                    android:layout_margin="4dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/day_background"
+                    android:background="@drawable/shape_rounded_blue"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="4dp">
-
-                    <TextView
-                        android:id="@+id/day_number_tuesday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="21"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/day_text_size"
-                        android:textStyle="bold" />
+                    android:padding="2dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/tuesday"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/small_text_size" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/day_container_wednesday"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/day_container_height"
-                    android:layout_margin="4dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/day_background"
+                    android:background="@drawable/shape_rounded_blue"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="4dp">
-
-                    <TextView
-                        android:id="@+id/day_number_wednesday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="21"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/day_text_size"
-                        android:textStyle="bold" />
+                    android:padding="2dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/wednesday"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/small_text_size" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/day_container_thursday"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/day_container_height"
-                    android:layout_margin="4dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/day_background"
+                    android:background="@drawable/shape_rounded_blue"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="4dp">
-
-                    <TextView
-                        android:id="@+id/day_number_thursday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="22"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/day_text_size"
-                        android:textStyle="bold" />
+                    android:padding="2dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/thursday"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/small_text_size" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/day_container_friday"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/day_container_height"
-                    android:layout_margin="4dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/day_background"
+                    android:background="@drawable/shape_rounded_blue"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="4dp">
-
-                    <TextView
-                        android:id="@+id/day_number_friday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="23"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/day_text_size"
-                        android:textStyle="bold" />
+                    android:padding="2dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/friday"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/small_text_size" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/day_container_saturday"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/day_container_height"
-                    android:layout_margin="4dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/day_background"
+                    android:background="@drawable/shape_rounded_blue"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="4dp">
-
-                    <TextView
-                        android:id="@+id/day_number_saturday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="24"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/day_text_size"
-                        android:textStyle="bold" />
+                    android:padding="2dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/saturday"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/small_text_size" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/day_container_sunday"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/day_container_height"
-                    android:layout_margin="4dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/day_background"
+                    android:background="@drawable/shape_rounded_blue"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="4dp">
-
-                    <TextView
-                        android:id="@+id/day_number_sunday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="25"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/day_text_size"
-                        android:textStyle="bold" />
+                    android:padding="2dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/sunday"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/small_text_size" />
-
                 </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/calendarRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_rounded_treatment"
+                    android:paddingStart="8dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/treatments"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <include
+                android:id="@+id/dose1"
+                layout="@layout/item_treatment_patient"/>
+            <include
+                android:id="@+id/dose2"
+                layout="@layout/item_treatment_patient"/>
+            <include
+                android:id="@+id/dose3"
+                layout="@layout/item_treatment_patient"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.unibuc.medtrack.R
@@ -20,6 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private val viewModel by viewModels<RegisterViewModel>()
+
+    private var selectedUserType: UserType? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,8 +56,20 @@ class RegisterFragment : Fragment() {
             when (it) {
                 SignUpResponse.SUCCESS -> {
                     Toast.makeText(requireContext(), "Sign-up successful!", Toast.LENGTH_SHORT).show()
-                    val action = RegisterFragmentDirections.actionRegisterFragmentToHomeGraph()
-                    findNavController().navigate(action)
+
+                    val tabbarFragment = requireActivity().findViewById<View>(R.id.tabbar_fragment)
+                    tabbarFragment.visibility = View.VISIBLE
+
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo(R.id.authentication_navigation, inclusive = true)
+                        .setLaunchSingleTop(true)
+                        .build()
+
+                    when (selectedUserType) {
+                        UserType.DOCTOR -> findNavController().navigate(R.id.doctor_navigation, null, navOptions)
+                        UserType.PATIENT -> findNavController().navigate(R.id.patient_navigation, null, navOptions)
+                        else -> Toast.makeText(requireContext(), "Unknown user type", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 SignUpResponse.EMAIL_TAKEN -> {
                     Toast.makeText(requireContext(), "Email already taken", Toast.LENGTH_SHORT).show()
@@ -95,6 +110,7 @@ class RegisterFragment : Fragment() {
             R.id.radioOptionPatient -> UserType.PATIENT
             else -> null
         }
+        selectedUserType = accountType
 
         viewModel.submitSignUpForm(name, email, password, accountType)
     }

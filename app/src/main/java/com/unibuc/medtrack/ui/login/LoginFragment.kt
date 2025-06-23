@@ -13,6 +13,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.unibuc.medtrack.R
 import com.unibuc.medtrack.data.models.LoginResponse
+import com.unibuc.medtrack.data.models.UserType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,11 +47,35 @@ class LoginFragment: Fragment() {
     }
 
     private fun setupObservables() {
+        viewModel.role.observe(viewLifecycleOwner) { role ->
+            if (viewModel.isLoginSuccessful.value == LoginResponse.SUCCESS) {
+                val tabbarFragment = requireActivity().findViewById<View>(R.id.tabbar_fragment)
+                tabbarFragment.visibility = View.VISIBLE
+
+                when (role) {
+                    UserType.DOCTOR -> {
+                        val action = LoginFragmentDirections.actionLoginFragmentToHomeGraphDoctor()
+                        findNavController().navigate(action)
+                    }
+                    UserType.PATIENT -> {
+                        val action = LoginFragmentDirections.actionLoginFragmentToHomeGraphPatient()
+                        findNavController().navigate(action)
+                    }
+                    else -> {}
+                }
+            }
+        }
+
         viewModel.isLoginSuccessful.observe(viewLifecycleOwner) {
             when (it) {
                 LoginResponse.SUCCESS -> {
-                    val action = LoginFragmentDirections.actionLoginFragmentToHomeGraph()
-                    findNavController().navigate(action)
+                    val email = requireView()
+                        .findViewById<TextInputEditText>(R.id.email_input)
+                        .text
+                        .toString()
+                        .trim()
+
+                    viewModel.loadRole(email)
                 }
                 LoginResponse.WRONG_CREDENTIALS -> {
                     Toast.makeText(requireContext(), "Wrong credentials", Toast.LENGTH_SHORT).show()
