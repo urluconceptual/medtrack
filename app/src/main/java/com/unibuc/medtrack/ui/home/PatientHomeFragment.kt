@@ -9,18 +9,23 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.unibuc.medtrack.R
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
 import java.util.Locale
 
+@AndroidEntryPoint
 class PatientHomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_patient_home, container, false)
+
+    private val userViewModel: PatientHomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,8 +40,10 @@ class PatientHomeFragment : Fragment() {
 
     private fun setupGreeting() {
         val greetingTextView = requireView().findViewById<TextView>(R.id.greeting_text)
-        val userName = "John Doe"
-        greetingTextView.text = "Hello, $userName!"
+        userViewModel.loadUserName()
+        userViewModel.userName.observe(viewLifecycleOwner) { name ->
+            greetingTextView.text = "Hello, $name!"
+        }
     }
 
     private fun setupCurrentDate() {
