@@ -11,4 +11,5 @@ interface UsersRepository {
     suspend fun checkEmailAndPassword(email: String, password: String): Boolean
     suspend fun getFullDoctorProfileByEmail(email: String): FullDoctorProfile?
     suspend fun getFullPatientProfileByEmail(email: String): FullPatientProfile?
+    suspend fun updateUser(user: UserModel)
 }
