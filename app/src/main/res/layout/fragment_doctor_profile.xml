@@ -37,6 +37,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/CustomTextInputOutline"
                 android:id="@+id/input_layout_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,6 +53,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/CustomTextInputOutline"
                 android:id="@+id/input_layout_specialty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,6 +68,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/CustomTextInputOutline"
                 android:id="@+id/input_layout_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,9 +84,12 @@
 
             <Button
                 android:id="@+id/btn_save_profile"
-                android:layout_width="match_parent"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/primary_blue"
+                android:layout_marginTop="44dp"
+                android:backgroundTint="@color/secondary_blue"
+                android:textColor="@color/primary_blue"
+                android:layout_gravity="center"
                 android:text="Save Profile" />
         </LinearLayout>
     </ScrollView>

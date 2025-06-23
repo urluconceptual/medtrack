@@ -1,8 +1,12 @@
 package com.unibuc.medtrack.ui.profile
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -33,6 +37,32 @@ class DoctorProfileFragment : Fragment(R.layout.fragment_doctor_profile) {  // m
                 view.findViewById<TextInputEditText>(R.id.input_doctor_name).setText(profile.user.name)
                 view.findViewById<TextInputEditText>(R.id.input_doctor_specialty).setText(profile.doctor.specialty)
                 view.findViewById<TextInputEditText>(R.id.input_doctor_email).setText(profile.user.email)
+            }
+        }
+
+        view.findViewById<View>(R.id.btn_save_profile).setOnClickListener {
+            val name = view.findViewById<TextInputEditText>(R.id.input_doctor_name).text.toString()
+            val specialty = view.findViewById<TextInputEditText>(R.id.input_doctor_specialty).text.toString()
+            val emailField = view.findViewById<TextInputEditText>(R.id.input_doctor_email).text.toString()
+
+            viewModel.doctorProfile.value?.let { currentProfile ->
+                val updatedProfile = currentProfile.copy(
+                    user = currentProfile.user.copy(name = name, email = emailField),
+                    doctor = currentProfile.doctor.copy(specialty = specialty)
+                )
+                viewModel.saveDoctorProfile(updatedProfile)
+            }
+        }
+
+        viewModel.saveSuccess.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                Toast.makeText(requireContext(), "Profile saved successfully", Toast.LENGTH_SHORT).show()
+                // Clear focus
+                view.clearFocus()
+
+                // Hide keyboard
+                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
         }
     }

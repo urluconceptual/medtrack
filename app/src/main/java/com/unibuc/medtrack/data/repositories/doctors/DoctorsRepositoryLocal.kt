@@ -10,4 +10,7 @@ class DoctorsRepositoryLocal(private val dao: DoctorsDAO) : DoctorsRepository {
     override suspend fun getDoctorByUserId(userId: String) = dao.getDoctorByUserId(userId)
     override suspend fun getAllDoctors() = dao.getAllDoctors()
     override suspend fun getDoctorsBySpecialty(specialty: String) = dao.getDoctorsBySpecialty(specialty)
+    override suspend fun updateDoctor(doctor: DoctorModel) {
+        dao.update(doctor)
+    }
 } 

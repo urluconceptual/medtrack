@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.unibuc.medtrack.data.models.FullPatientProfile
+import com.unibuc.medtrack.data.repositories.patients.PatientsRepository
 import com.unibuc.medtrack.data.repositories.users.UsersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,11 +16,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PatientProfileViewModel @Inject constructor(
-    private val usersRepository: UsersRepository
+    private val usersRepository: UsersRepository,
+    private val patientsRepository: PatientsRepository
 ) : ViewModel() {
 
     private val _patientProfile = MutableLiveData<FullPatientProfile?>()
     val patientProfile: LiveData<FullPatientProfile?> get() = _patientProfile
+    private val _saveSuccess = MutableLiveData<Boolean>()
+    val saveSuccess: LiveData<Boolean> get() = _saveSuccess
 
     fun loadPatientProfile(email: String) {
         viewModelScope.launch {
@@ -30,4 +34,15 @@ class PatientProfileViewModel @Inject constructor(
             _patientProfile.value = result
         }
     }
+
+    fun savePatientProfile(profile: FullPatientProfile) {
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    usersRepository.updateUser(profile.user)
+                    patientsRepository.updatePatient(profile.patient)
+                }
+                _saveSuccess.value = true
+            }
+    }
+
 }

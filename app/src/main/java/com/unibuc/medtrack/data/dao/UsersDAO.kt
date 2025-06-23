@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.unibuc.medtrack.data.models.UserModel
 
 @Dao
@@ -30,4 +31,7 @@ interface UsersDAO {
         WHERE email = :email AND password = :password
     """)
     suspend fun checkEmailAndPassword(email: String, password: String): UserModel?
+
+    @Update
+    suspend fun update(user: UserModel)
 }

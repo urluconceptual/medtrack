@@ -9,4 +9,5 @@ interface DoctorsRepository {
     suspend fun getDoctorByUserId(userId: String): DoctorModel?
     suspend fun getAllDoctors(): List<DoctorModel>
     suspend fun getDoctorsBySpecialty(specialty: String): List<DoctorModel>
+    suspend fun updateDoctor(doctor: DoctorModel)
 } 

@@ -32,4 +32,7 @@ class UsersRepositoryLocal(val dao: UsersDAO, val doctorDAO: DoctorsDAO, val pat
         Log.i("UsersRepositoryLocal", "Patient found: " + patient)
         return if (patient != null) FullPatientProfile(user, patient) else null
     }
+    override suspend fun updateUser(user: UserModel) {
+        dao.update(user)
+    }
 }
