@@ -9,47 +9,24 @@
         android:id="@+id/doctorHomeFragment"
         android:name="com.unibuc.medtrack.ui.home.DoctorHomeFragment"
         android:label="Doctor Home"
-        tools:layout="@layout/fragment_doctor_home">
-
+        tools:layout="@layout/fragment_doctor_home" />
         <action
-            android:id="@+id/action_patientHomeFragment_to_patientChatsFragment"
-            app:destination="@id/patientChatsFragment" />
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_patientHomeFragment_to_patientCalendarFragment"
-            app:destination="@id/patientCalendarFragment" />
-
-    </fragment>
-
+            android:id="@+id/action_homeFragment_to_patientProfileFragment"
+            app:destination="@id/patientProfileFragment" />
 
     <fragment
-        android:id="@+id/patientChatsFragment"
-        android:name="com.unibuc.medtrack.ui.home.PatientChatsFragment"
-        android:label="Patient Chats"
-        tools:layout="@layout/fragment_patient_chats">
-
-        <action
-            android:id="@+id/action_patientChatsFragment_to_patientHomeFragment"
-            app:destination="@id/patientHomeFragment" />
-        <action
-            android:id="@+id/action_patientChatsFragment_to_patientCalendarFragment"
-            app:destination="@id/patientCalendarFragment" />
-
-    </fragment>
-
+        android:id="@+id/profileFragment"
+        android:name="com.unibuc.medtrack.ui.profile.DoctorProfileFragment"
+        android:label="Profile" />
 
     <fragment
-        android:id="@+id/patientCalendarFragment"
-        android:name="com.unibuc.medtrack.ui.home.PatientCalendarFragment"
-        android:label="Patient Calendar"
-        tools:layout="@layout/fragment_patient_calendar">
+        android:id="@+id/patientProfileFragment"
+        android:name="com.unibuc.medtrack.ui.profile.PatientProfileFragment"
+        android:label="Patient Profile" />
 
-        <action
-            android:id="@+id/action_patientCalendarFragment_to_patientHomeFragment"
-            app:destination="@id/patientHomeFragment" />
-        <action
-            android:id="@+id/action_patientCalendarFragment_to_patientChatsFragment"
-            app:destination="@id/patientChatsFragment" />
 
-    </fragment>
 
 </navigation>
