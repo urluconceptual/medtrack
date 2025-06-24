@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.unibuc.medtrack.R
 import java.util.Calendar
@@ -49,16 +50,33 @@ class CalendarAdapter(
 
                 when {
                     thisDay.before(today) -> {
-                        dayText.setTextColor(Color.GRAY)
-                        dayText.setBackgroundColor(Color.TRANSPARENT)
+                        //dayText.setTextColor(Color.GRAY)
+                        //dayText.setBackgroundColor(Color.TRANSPARENT)
+                        dayText.setBackgroundResource(R.drawable.selector_calendar_item)
+                        dayText.setTextColor(
+                            ResourcesCompat.getColorStateList(
+                                itemView.context.resources,
+                                R.color.selector_calendar_past_text,
+                                null
+                            )!!
+                        )
                     }
                     thisDay.equals(today) -> {
                         dayText.setTextColor(Color.WHITE)
-                        dayText.setBackgroundResource(R.drawable.shape_rounded_blue)
+                        //dayText.setBackgroundResource(R.drawable.shape_rounded_blue)
+                        dayText.setBackgroundResource(R.drawable.selector_calendar_item_today)
                     }
                     else -> {
-                        dayText.setTextColor(Color.BLACK)
-                        dayText.setBackgroundColor(Color.TRANSPARENT)
+                        //dayText.setTextColor(Color.BLACK)
+                        //dayText.setBackgroundColor(Color.TRANSPARENT)
+                        dayText.setBackgroundResource(R.drawable.selector_calendar_item)
+                        dayText.setTextColor(
+                            ResourcesCompat.getColorStateList(
+                                itemView.context.resources,
+                                R.color.selector_calendar_text,
+                                null
+                            )!!
+                        )
                     }
                 }
             } else {
