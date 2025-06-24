@@ -10,9 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unibuc.medtrack.R
-import com.unibuc.medtrack.adapters.ChatsAdapter
-import com.unibuc.medtrack.data.models.DoctorModel
-import com.unibuc.medtrack.data.models.DoctorUserDTO
+import com.unibuc.medtrack.adapters.ChatsAdapterDoctorDtos
+import com.unibuc.medtrack.adapters.ChatsAdapterPatientDtos
+import com.unibuc.medtrack.data.models.UserType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +29,7 @@ class PatientChatsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecycler()
-        viewModel.loadDoctorDtos()
+        viewModel.loadDtos()
         observeViewModel()
     }
 
@@ -39,20 +39,48 @@ class PatientChatsFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        viewModel.myRole.observe(viewLifecycleOwner) { role ->
+            when (role) {
+                UserType.PATIENT -> {
+                    observePatientViewModel()
+                }
+                UserType.DOCTOR -> {
+                    observeDoctorViewModel()
+                }
+                else -> {}
+            }
+        }
+    }
+    private fun observePatientViewModel() {
         viewModel.doctorDtos.observe(viewLifecycleOwner) { doctorDtos ->
-            recyclerView.adapter = ChatsAdapter(doctorDtos) { doctorDto ->
-                goToChatConversationPage(doctorDto.userId, doctorDto.name, doctorDto.specialty)
+            recyclerView.adapter = ChatsAdapterDoctorDtos(doctorDtos) { doctorDto ->
+                goToPatientChatConversationPage(doctorDto.userId, doctorDto.name, doctorDto.specialty)
+            }
+        }
+    }
+    private fun observeDoctorViewModel() {
+        viewModel.patientDtos.observe(viewLifecycleOwner) { patientDtos ->
+            recyclerView.adapter = ChatsAdapterPatientDtos(patientDtos) { patientDto ->
+                goToDoctorChatConversationPage(patientDto.userId, patientDto.name, patientDto.dateOfBirth)
             }
         }
     }
 
-    private fun goToChatConversationPage(doctorId: String, doctorName: String, doctorSpecialty: String) {
+    private fun goToPatientChatConversationPage(doctorId: String, doctorName: String, doctorSpecialty: String) {
         val bundle = Bundle().apply {
             putString("doctorId", doctorId)
             putString("doctorName", doctorName)
             putString("doctorSpecialty", doctorSpecialty)
         }
         findNavController().navigate(R.id.patientChatConversationFragment, bundle)
+    }
+    private fun goToDoctorChatConversationPage(patientId: String, patientName: String, patientDateOfBirth: String) {
+        val bundle = Bundle().apply {
+            putString("patientId", patientId)
+            putString("patientName", patientName)
+            putString("patientDateOfBirth", patientDateOfBirth)
+        }
+        findNavController().navigate(R.id.doctorChatConversationFragment, bundle)
     }
 
 }

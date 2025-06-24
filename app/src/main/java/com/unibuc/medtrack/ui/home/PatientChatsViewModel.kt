@@ -8,8 +8,11 @@ import com.unibuc.medtrack.data.SessionManager
 import com.unibuc.medtrack.data.models.ChatMessageDTO
 import com.unibuc.medtrack.data.models.ChatMessageModel
 import com.unibuc.medtrack.data.models.DoctorUserDTO
+import com.unibuc.medtrack.data.models.PatientUserDTO
+import com.unibuc.medtrack.data.models.UserType
 import com.unibuc.medtrack.data.repositories.chat_messages.ChatMessagesRepository
 import com.unibuc.medtrack.data.repositories.doctors.DoctorsRepository
+import com.unibuc.medtrack.data.repositories.patients.PatientsRepository
 import com.unibuc.medtrack.data.repositories.users.UsersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,28 +25,54 @@ class PatientChatsViewModel @Inject constructor(
     private val usersRepository: UsersRepository,
     private val chatMessagesRepository: ChatMessagesRepository,
     private val doctorsRepository: DoctorsRepository,
+    private val patientsRepository: PatientsRepository,
     private val sessionManager: SessionManager
 ) : ViewModel() {
 
     private val _doctorDtos = MutableLiveData<List<DoctorUserDTO>>()
     val doctorDtos: LiveData<List<DoctorUserDTO>> get() = _doctorDtos
 
+    private val _patientDtos = MutableLiveData<List<PatientUserDTO>>()
+    val patientDtos: LiveData<List<PatientUserDTO>> get() = _patientDtos
+
+    private val _myRole = MutableLiveData<UserType>()
+    val myRole: LiveData<UserType> get() = _myRole
+
     val email = sessionManager.getUserEmail()
 
-    fun loadDoctorDtos() {
+    fun loadDtos() {
         if (email != null) {
             viewModelScope.launch {
                 val myId = withContext(Dispatchers.IO) {
                     usersRepository.getByEmail(email)?.id.toString()
                 }
 
-                val doctorIds = withContext(Dispatchers.IO) {
-                    chatMessagesRepository.getAllMyConversationUserIds(myId)
+                _myRole.value = withContext(Dispatchers.IO) {
+                    usersRepository.getByEmail(email)?.role
                 }!!
 
-                _doctorDtos.value = withContext(Dispatchers.IO) {
-                    doctorIds.map { doctorsRepository.getDoctorUserDtoById(it) !! }
-                }!!
+                if (_myRole.value == UserType.PATIENT) {
+                    val doctorIds = withContext(Dispatchers.IO) {
+                        chatMessagesRepository.getAllMyConversationUserIds(myId)
+                    }!!
+
+                    _doctorDtos.value = withContext(Dispatchers.IO) {
+                        doctorIds.map { doctorsRepository.getDoctorUserDtoById(it)!! }
+                    }!!
+
+                    _patientDtos.value = listOf()
+                }
+                else if (_myRole.value == UserType.DOCTOR) {
+                    val patientIds = withContext(Dispatchers.IO) {
+                        chatMessagesRepository.getAllMyConversationUserIds(myId)
+                    }!!
+
+                    _patientDtos.value = withContext(Dispatchers.IO) {
+                        patientIds.map { patientsRepository.getPatientUserDtoById(it)!! }
+                    }!!
+
+                    _doctorDtos.value = listOf()
+                }
             }
         }
     }

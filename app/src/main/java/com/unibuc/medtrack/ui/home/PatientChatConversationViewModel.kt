@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.unibuc.medtrack.data.SessionManager
 import com.unibuc.medtrack.data.models.ChatMessageDTO
 import com.unibuc.medtrack.data.models.ChatMessageModel
+import com.unibuc.medtrack.data.models.UserType
 import com.unibuc.medtrack.data.repositories.chat_messages.ChatMessagesRepository
 import com.unibuc.medtrack.data.repositories.users.UsersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,8 +26,20 @@ class PatientChatConversationViewModel @Inject constructor(
     private val _messageDtos = MutableLiveData<List<ChatMessageDTO>>()
     val messageDtos: LiveData<List<ChatMessageDTO>> get() = _messageDtos
 
+    private val _myRole = MutableLiveData<UserType>()
+    val myRole: LiveData<UserType> get() = _myRole
+
     val email = sessionManager.getUserEmail()
 
+    fun loadRole() {
+        if (email != null) {
+            viewModelScope.launch {
+                _myRole.value = withContext(Dispatchers.IO) {
+                    usersRepository.getByEmail(email)?.role
+                }!!
+            }
+        }
+    }
     fun loadMessageDtos(otherId: String) {
         if (email != null) {
             viewModelScope.launch {

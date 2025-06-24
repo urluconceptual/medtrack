@@ -72,8 +72,7 @@ class MainActivity : AppCompatActivity() {
                         var dest = 0
 
                         if (role == UserType.DOCTOR)
-                        //  TODO
-                            return@launch
+                            dest = R.id.doctorChatsFragment
                         else
                             dest = R.id.patientChatsFragment
 

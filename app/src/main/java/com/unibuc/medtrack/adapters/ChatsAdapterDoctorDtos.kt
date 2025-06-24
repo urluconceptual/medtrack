@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.unibuc.medtrack.R
 import com.unibuc.medtrack.data.models.DoctorUserDTO
 
-class ChatsAdapter(private val doctorDtos: List<DoctorUserDTO>,
-                   private val onChatButtonClick: (doctorDto: DoctorUserDTO) -> Unit) :
-    RecyclerView.Adapter<ChatsAdapter.ChatViewHolder>() {
+class ChatsAdapterDoctorDtos(private val doctorDtos: List<DoctorUserDTO>,
+                             private val onChatButtonClick: (doctorDto: DoctorUserDTO) -> Unit) :
+    RecyclerView.Adapter<ChatsAdapterDoctorDtos.ChatViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         val inflater = LayoutInflater.from(parent.context)

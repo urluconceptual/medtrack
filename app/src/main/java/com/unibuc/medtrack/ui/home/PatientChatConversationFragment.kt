@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unibuc.medtrack.R
 import com.unibuc.medtrack.adapters.ChatMessageAdapter
+import com.unibuc.medtrack.data.models.UserType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,9 +24,13 @@ class PatientChatConversationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_patient_chat_conversation, container, false)
 
-    private lateinit var doctorId: String
+    private lateinit var otherId: String
+
     private lateinit var doctorName: String
     private lateinit var doctorSpecialty: String
+
+    private lateinit var patientName: String
+    private lateinit var patientDateOfBirth: String
 
     private lateinit var recyclerView: RecyclerView
     private val viewModel: PatientChatConversationViewModel by viewModels()
@@ -34,20 +39,45 @@ class PatientChatConversationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecycler()
         setupListeners()
-        setupDoctorInfo()
-        viewModel.loadMessageDtos(doctorId)
+        viewModel.loadRole()
+        setupInfo()
         observeViewModel()
     }
 
+    private fun setupInfo() {
+        viewModel.myRole.observe(viewLifecycleOwner) { role ->
+            when (role) {
+                UserType.PATIENT -> {
+                    setupDoctorInfo()
+                    viewModel.loadMessageDtos(otherId)
+                }
+                UserType.DOCTOR -> {
+                    setupPatientInfo()
+                    viewModel.loadMessageDtos(otherId)
+                }
+                else -> {}
+            }
+        }
+    }
     private fun setupDoctorInfo() {
         arguments?.let {
-            doctorId = it.getString("doctorId") ?: throw IllegalStateException()
+            otherId = it.getString("doctorId") ?: throw IllegalStateException()
             doctorName = it.getString("doctorName") ?: ""
             doctorSpecialty = it.getString("doctorSpecialty") ?: ""
         }
 
         view?.findViewById<TextView>(R.id.doctor_name)!!.setText(doctorName)
         view?.findViewById<TextView>(R.id.doctor_specialty)!!.setText(doctorSpecialty)
+    }
+    private fun setupPatientInfo() {
+        arguments?.let {
+            otherId = it.getString("patientId") ?: throw IllegalStateException()
+            patientName = it.getString("patientName") ?: ""
+            patientDateOfBirth = it.getString("patientDateOfBirth") ?: ""
+        }
+
+        view?.findViewById<TextView>(R.id.doctor_name)!!.setText(patientName)
+        view?.findViewById<TextView>(R.id.doctor_specialty)!!.setText(patientDateOfBirth)
     }
 
     private fun setupRecycler() {

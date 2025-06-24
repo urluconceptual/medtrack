@@ -11,8 +11,38 @@
         android:label="Doctor Home"
         tools:layout="@layout/fragment_doctor_home" />
         <action
-            android:id="@+id/action_homeFragment_to_profileFragment"
+            android:id="@+id/action_doctorHomeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_doctorHomeFragment_to_doctorChatsFragment"
+            app:destination="@id/doctorChatsFragment" />
+
+    <fragment
+        android:id="@+id/doctorChatsFragment"
+        android:name="com.unibuc.medtrack.ui.home.PatientChatsFragment"
+        android:label="Doctor Chats"
+        tools:layout="@layout/fragment_patient_chats">
+
+        <action
+            android:id="@+id/action_doctorChatsFragment_to_doctorHomeFragment"
+            app:destination="@id/doctorHomeFragment" />
+
+        <action
+            android:id="@+id/action_doctorChatsFragment_to_doctorChatConversationFragment"
+            app:destination="@id/doctorChatConversationFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/doctorChatConversationFragment"
+        android:name="com.unibuc.medtrack.ui.home.PatientChatConversationFragment"
+        android:label="Doctor Chat Conversation"
+        tools:layout="@layout/fragment_patient_chat_conversation">
+
+        <action
+            android:id="@+id/action_doctorChatConversationFragment_to_doctorChatsFragment"
+            app:destination="@id/doctorChatsFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
