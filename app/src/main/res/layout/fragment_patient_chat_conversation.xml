@@ -91,7 +91,7 @@
                         app:layout_constraintBottom_toBottomOf="parent">
 
                         <TextView
-                            android:id="@+id/name"
+                            android:id="@+id/doctor_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Dr. Olivia Turner, M.D."
@@ -99,7 +99,7 @@
                             android:textColor="@color/accent_blue"/>
 
                         <TextView
-                            android:id="@+id/dose"
+                            android:id="@+id/doctor_specialty"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Dermato-Endocrinology" />

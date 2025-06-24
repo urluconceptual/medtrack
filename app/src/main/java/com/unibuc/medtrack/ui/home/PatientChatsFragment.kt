@@ -4,11 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.unibuc.medtrack.R
+import com.unibuc.medtrack.adapters.ChatsAdapter
+import com.unibuc.medtrack.data.models.DoctorModel
+import com.unibuc.medtrack.data.models.DoctorUserDTO
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PatientChatsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -16,38 +23,36 @@ class PatientChatsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_patient_chats, container, false)
 
+    private lateinit var recyclerView: RecyclerView
+    private val viewModel: PatientChatsViewModel by viewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupData()
-        setupListeners()
+        setupRecycler()
+        viewModel.loadDoctorDtos()
+        observeViewModel()
     }
 
-    private fun setupListeners() {
-        val chatButtons = findAllViewsWithTag(requireView(), "chat_button")
-        for (chatButton in chatButtons)
-            chatButton.setOnClickListener {
-                goToChatConversationPage()
-            }
+    private fun setupRecycler() {
+        recyclerView = requireView().findViewById(R.id.chatsRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    fun findAllViewsWithTag(root: View, tag: Any): List<View> {
-        val result = mutableListOf<View>()
-        if (root.tag == tag) result.add(root)
-        if (root is ViewGroup) {
-            for (i in 0 until root.childCount) {
-                result.addAll(findAllViewsWithTag(root.getChildAt(i), tag))
+    private fun observeViewModel() {
+        viewModel.doctorDtos.observe(viewLifecycleOwner) { doctorDtos ->
+            recyclerView.adapter = ChatsAdapter(doctorDtos) { doctorDto ->
+                goToChatConversationPage(doctorDto.userId, doctorDto.name, doctorDto.specialty)
             }
         }
-        return result
     }
 
-    private fun setupData() {
-
-    }
-
-    private fun goToChatConversationPage() {
-        val action = PatientChatsFragmentDirections.actionPatientChatsFragmentToPatientChatConversationFragment()
-        findNavController().navigate(action)
+    private fun goToChatConversationPage(doctorId: String, doctorName: String, doctorSpecialty: String) {
+        val bundle = Bundle().apply {
+            putString("doctorId", doctorId)
+            putString("doctorName", doctorName)
+            putString("doctorSpecialty", doctorSpecialty)
+        }
+        findNavController().navigate(R.id.patientChatConversationFragment, bundle)
     }
 
 }
