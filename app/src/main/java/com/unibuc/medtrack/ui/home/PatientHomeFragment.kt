@@ -31,7 +31,7 @@ class PatientHomeFragment : Fragment() {
     ): View? = inflater.inflate(R.layout.fragment_patient_home, container, false)
 
     private val userViewModel: PatientHomeViewModel by viewModels()
-    private val viewModel: PatientCalendarViewModel by viewModels()
+    private val viewModel: PatientHomeViewModel by viewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -120,7 +120,7 @@ class PatientHomeFragment : Fragment() {
         }
 
         Log.i("PatientHomeFragment", "calling fetchFullTreatmentsForPatient()")
-        viewModel.fetchTreatmentsForPatient()  // This should now return List<FullTreatment>
+        viewModel.fetchFullTreatmentDetails()
     }
 
 
