@@ -14,6 +14,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +30,9 @@ class PatientChatConversationViewModel @Inject constructor(
 
     private val _myRole = MutableLiveData<UserType>()
     val myRole: LiveData<UserType> get() = _myRole
+
+    private val _otherId = MutableLiveData<String>()
+    val otherId: LiveData<String> get() = _otherId
 
     val email = sessionManager.getUserEmail()
 
@@ -54,6 +59,30 @@ class PatientChatConversationViewModel @Inject constructor(
                 _messageDtos.value = messages.map {
                     ChatMessageDTO.fromModel(it, myId)
                 }
+
+                _otherId.value = otherId
+            }
+        }
+    }
+
+    fun sendChatMessage(message: String) {
+        if (email != null) {
+            viewModelScope.launch {
+                val myId = withContext(Dispatchers.IO) {
+                    usersRepository.getByEmail(email)?.id.toString()
+                }
+
+                val now = LocalDate.now().toString()
+                val chatMessage = ChatMessageModel(
+                    id = UUID.randomUUID().toString(),
+                    senderId = myId,
+                    receiverId = _otherId.value!!,
+                    message = message,
+                    timeSent = now)
+
+                chatMessagesRepository.insert(chatMessage)
+
+                loadMessageDtos(_otherId.value!!)
             }
         }
     }

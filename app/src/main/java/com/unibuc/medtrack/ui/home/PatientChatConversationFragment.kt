@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import com.unibuc.medtrack.R
 import com.unibuc.medtrack.adapters.ChatMessageAdapter
 import com.unibuc.medtrack.data.models.UserType
@@ -89,6 +91,10 @@ class PatientChatConversationFragment : Fragment() {
         requireView().findViewById<ImageButton>(R.id.back_button_chat).setOnClickListener {
             goToChatsPage()
         }
+
+        requireView().findViewById<Button>(R.id.send_message_button).setOnClickListener {
+            sendChatMessage()
+        }
     }
 
     private fun observeViewModel() {
@@ -100,6 +106,19 @@ class PatientChatConversationFragment : Fragment() {
     private fun goToChatsPage() {
         val action = PatientChatConversationFragmentDirections.actionPatientChatConversationFragmentToPatientChatsFragment()
         findNavController().navigate(action)
+    }
+
+    private fun sendChatMessage() {
+        val text = requireView()
+            .findViewById<TextInputEditText>(R.id.message_input)
+            .text
+            .toString()
+
+        viewModel.sendChatMessage(text)
+
+        requireView()
+            .findViewById<TextInputEditText>(R.id.message_input)
+            .setText("")
     }
 
 }
