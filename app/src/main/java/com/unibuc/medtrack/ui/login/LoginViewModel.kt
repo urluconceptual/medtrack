@@ -1,5 +1,6 @@
 package com.unibuc.medtrack.ui.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
@@ -54,6 +55,24 @@ class LoginViewModel @Inject constructor(
                 return@launch
             }
             sessionManager.saveUserEmail(email)
+            viewModelScope.launch {
+                try {
+                    val user = withContext(Dispatchers.IO) {
+                        usersRepository.getByEmail(email)
+                    }
+
+                    user?.let {
+                        sessionManager.saveUserId(it.id)
+                    } ?: run {
+                        // Handle case where user is null
+                        Log.e("ViewModel", "User not found for email: $email")
+                    }
+                } catch (e: Exception) {
+                    Log.e("ViewModel", "Failed to fetch user by email", e)
+                }
+            }
+
+
             _isLoginSuccessful.value = LoginResponse.SUCCESS
         }
     }

@@ -281,16 +281,18 @@
                 android:textColor="@color/accent_blue"
                 android:paddingTop="12dp"/>
 
-<!--            TODO - Scrollable RecyclerView -->
-            <include
-                android:id="@+id/dose1"
-                layout="@layout/item_treatment_patient"/>
-            <include
-                android:id="@+id/dose2"
-                layout="@layout/item_treatment_patient"/>
-            <include
-                android:id="@+id/dose3"
-                layout="@layout/item_treatment_patient"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/treatments_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"
+                android:layout_marginBottom="74dp"
+                android:paddingTop="12dp"
+                />
+
 
         </LinearLayout>
 
