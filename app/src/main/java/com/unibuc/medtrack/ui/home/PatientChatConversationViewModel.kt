@@ -8,12 +8,14 @@ import com.unibuc.medtrack.data.SessionManager
 import com.unibuc.medtrack.data.models.ChatMessageDTO
 import com.unibuc.medtrack.data.models.ChatMessageModel
 import com.unibuc.medtrack.data.models.UserType
-import com.unibuc.medtrack.data.repositories.chat_messages.ChatMessagesRepository
+import com.unibuc.medtrack.data.repositories.chat_messages.ChatMessagesRepository as ChatMessagesDataRepository
+import com.unibuc.medtrack.networking.repositories.ChatMessagesRepository as ChatMessagesAPIRepository
 import com.unibuc.medtrack.data.repositories.users.UsersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import java.time.LocalDate
 import java.util.UUID
 import javax.inject.Inject
@@ -21,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PatientChatConversationViewModel @Inject constructor(
     private val usersRepository: UsersRepository,
-    private val chatMessagesRepository: ChatMessagesRepository,
+    private val chatMessagesRepository: ChatMessagesDataRepository,
     private val sessionManager: SessionManager
 ) : ViewModel() {
 
@@ -83,6 +85,35 @@ class PatientChatConversationViewModel @Inject constructor(
                 chatMessagesRepository.insert(chatMessage)
 
                 loadMessageDtos(_otherId.value!!)
+            }
+        }
+    }
+
+    fun getChatMessages(otherId: String) {
+        if (email != null) {
+            viewModelScope.launch {
+                val myId = withContext(Dispatchers.IO) {
+                    usersRepository.getByEmail(email)?.id.toString()
+                }
+
+                _otherId.value = otherId
+                val receiverId = _otherId.value ?: return@launch
+
+                try {
+                    val response = withContext(Dispatchers.IO) {
+                        ChatMessagesAPIRepository.getChatMessages(myId, receiverId)
+                    }
+
+                    val chatMessages = response.data
+                    withContext(Dispatchers.IO) {
+                        chatMessages.forEach { message ->
+                            chatMessagesRepository.insert(message)
+                        }
+                    }
+
+                    loadMessageDtos(receiverId)
+
+                } catch (e: IOException) {}
             }
         }
     }

@@ -51,11 +51,13 @@ class PatientChatConversationFragment : Fragment() {
             when (role) {
                 UserType.PATIENT -> {
                     setupDoctorInfo()
-                    viewModel.loadMessageDtos(otherId)
+                    //viewModel.loadMessageDtos(otherId)
+                    viewModel.getChatMessages(otherId)
                 }
                 UserType.DOCTOR -> {
                     setupPatientInfo()
-                    viewModel.loadMessageDtos(otherId)
+                    //viewModel.loadMessageDtos(otherId)
+                    viewModel.getChatMessages(otherId)
                 }
                 else -> {}
             }
