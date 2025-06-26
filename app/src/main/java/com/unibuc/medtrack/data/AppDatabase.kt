@@ -19,11 +19,10 @@ import com.unibuc.medtrack.data.models.TreatmentModel
         UserModel::class,
         DoctorModel::class,
         PatientModel::class,
-        ChatMessageModel::class
-        PatientModel::class,
-        TreatmentModel::class,
+        ChatMessageModel::class,
+        TreatmentModel::class
     ],
-    version = 4
+    version = 5
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
