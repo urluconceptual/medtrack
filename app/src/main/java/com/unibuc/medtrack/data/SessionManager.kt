@@ -2,6 +2,7 @@ package com.unibuc.medtrack.data
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,6 +18,14 @@ class SessionManager @Inject constructor(
 
     fun getUserEmail(): String? {
         return prefs.getString("email", null)
+    }
+
+    fun saveUserId(id: String) {
+        prefs.edit().putString("id", id.toString()).commit()
+    }
+
+    fun getUserId(): String? {
+        return prefs.getString("id", null)
     }
 
     fun clearSession() {
