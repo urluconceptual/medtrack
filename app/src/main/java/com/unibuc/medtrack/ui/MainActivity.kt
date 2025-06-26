@@ -1,5 +1,7 @@
 package com.unibuc.medtrack.ui
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +13,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.unibuc.medtrack.R
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.unibuc.medtrack.data.models.UserType
 import kotlinx.coroutines.launch
@@ -23,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        requestNotificationPermission()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -30,7 +35,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        //  Padding for a BottomNavigationView bar can only be removed in kt..
         val tabbar =
             findViewById<BottomNavigationView>(R.id.tabbar)
         ViewCompat.setOnApplyWindowInsetsListener(tabbar) { view, insets ->
@@ -53,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        
+
         setupListeners()
     }
 
@@ -123,4 +127,25 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                    NOTIFICATION_PERMISSION_REQUEST_CODE
+                )
+            }
+        }
+    }
+
+    companion object {
+        private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 1001
+    }
+
 }
