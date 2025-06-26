@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.unibuc.medtrack.R
 import com.unibuc.medtrack.data.SessionManager
@@ -65,5 +67,21 @@ class PatientProfileFragment : Fragment(R.layout.fragment_patient_profile) {
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
         }
+        val logoutButton = view.findViewById<Button>(R.id.login_button_form)
+
+        logoutButton.setOnClickListener {
+            performLogout()
+        }
+
+
+    }
+
+    private fun performLogout() {
+        val sessionManager = SessionManager(requireContext())
+        sessionManager.clearSession()
+
+        Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
+
+        findNavController().navigate(R.id.action_patientHomeFragment_to_loginFragment)
     }
 }

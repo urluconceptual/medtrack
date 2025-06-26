@@ -101,10 +101,19 @@
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/secondary_blue"
-                android:textColor="@color/primary_blue"
-                android:layout_marginTop="44dp"
+                android:layout_marginTop="104dp"
+                android:backgroundTint="@color/primary_blue"
                 android:text="Save Profile" />
+
+            <Button
+                android:id="@+id/login_button_form"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/primary_blue"
+                android:backgroundTint="@color/secondary_blue"
+                android:layout_gravity="center"
+                android:text="@string/logout" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

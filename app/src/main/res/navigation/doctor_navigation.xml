@@ -47,8 +47,11 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.unibuc.medtrack.ui.profile.DoctorProfileFragment"
-        android:label="Profile" />
+        android:label="Profile">
 
+        <action
+            android:id="@+id/action_doctorHomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
 
-
+    </fragment>
 </navigation>
