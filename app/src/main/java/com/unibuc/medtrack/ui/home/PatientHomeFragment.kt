@@ -1,5 +1,6 @@
 package com.unibuc.medtrack.ui.home
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
@@ -33,11 +34,11 @@ class PatientHomeFragment : Fragment() {
 
     private val viewModel: PatientHomeViewModel by viewModels()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fetchTreatments()
         setupData()
+        viewModel.scheduleAllTodayNotifications(requireContext())
     }
 
     private fun setupData() {
