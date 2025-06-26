@@ -8,7 +8,7 @@ import java.util.UUID
 @Entity(tableName = "notifications")
 class NotificationModel (
     @PrimaryKey
-    val id: UUID,
+    val id: String,
     val treatmentId: String,
     val time: LocalDateTime,
     val takenAt: LocalDateTime?

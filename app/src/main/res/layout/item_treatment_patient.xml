@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="8dp"
-
+            android:id="@+id/treatment_container"
             android:background="@drawable/shape_rounded_treatment_outer"
 
             app:layout_constraintTop_toTopOf="parent"

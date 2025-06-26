@@ -12,7 +12,7 @@ class NotificationsRepositoryLocal(
 ) : NotificationsRepository {
     override suspend fun getAll(): List<NotificationModel> = dao.getAllNotifications()
 
-    override suspend fun getById(id: UUID): NotificationModel? = dao.getNotificationById(id)
+    override suspend fun getById(id: String): NotificationModel? = dao.getNotificationById(id)
 
     override suspend fun getByTreatment(treatmentId: String): List<NotificationModel> =
         dao.getNotificationsForTreatment(treatmentId)
@@ -37,5 +37,11 @@ class NotificationsRepositoryLocal(
         Log.i("NotificationsRepository", "data sent to query: " + patientId + " today: " + date);
         return dao.getTodayNotificationsWithTreatment(patientId, date)
     }
+
+    override suspend fun updateTakenAt(notificationId: String, takenAt: LocalDateTime) {
+        dao.updateTakenAt(notificationId, takenAt)
+    }
+
+
 
 }

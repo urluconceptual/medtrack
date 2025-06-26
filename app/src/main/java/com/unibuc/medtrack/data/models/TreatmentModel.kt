@@ -20,4 +20,8 @@ data class TreatmentModel(
     val dose_interval: Int,
     val dosage: Double,
     val dosageUnit: MeasurementUnit
-)
+){
+    override fun toString(): String {
+        return "TreatmentModel(id=$id, doctorId='$doctorId', patientId='$patientId', startDate='$startDate', endDate='$endDate', createdAt=$createdAt, medicineName='$medicineName', description='$description', dose_interval=$dose_interval, dosage=$dosage, dosageUnit=$dosageUnit)"
+    }
+}

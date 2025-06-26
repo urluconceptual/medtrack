@@ -8,4 +8,6 @@
     <color name="accent_blue">#3B68FF</color>
     <color name="mid_blue">#7692FF</color>
     <color name="ltgray">#DDDDDD</color>
+    <color name="red">#FF9999</color>
+    <color name="green">#D8F6DC</color>
 </resources>
