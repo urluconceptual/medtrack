@@ -1,6 +1,7 @@
 package com.unibuc.medtrack.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -37,12 +38,24 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.loginFragment,
+                R.id.registerFragment,
+                R.id.onboardingFragment -> {
+                    tabbar.visibility = View.GONE
+                }
+                else -> {
+                    tabbar.visibility = View.VISIBLE
+                }
+            }
+        }
+        
         setupListeners()
     }
-
-    //  TODO - When/if "log out" functionality is added, the tabbar (bottom navigation view)
-    //         fragment should have its visibility changed back to "GONE", to not be visible
-    //         in the Onboarding / Login / Register fragments.
 
     private fun setupListeners() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.tabbar)
