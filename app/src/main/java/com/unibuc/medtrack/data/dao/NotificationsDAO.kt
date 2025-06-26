@@ -30,7 +30,7 @@ interface NotificationsDAO {
     suspend fun getNotificationsForTreatment(treatmentId: String): List<NotificationModel>
 
     @Query("SELECT * FROM notifications WHERE id = :id")
-    suspend fun getNotificationById(id: UUID): NotificationModel?
+    suspend fun getNotificationById(id: String): NotificationModel?
 
     @Query("SELECT * FROM notifications")
     suspend fun getAllNotifications(): List<NotificationModel>
@@ -44,4 +44,8 @@ interface NotificationsDAO {
         )
     """)
     suspend fun getTodayNotificationsWithTreatment(patientId: String, today: LocalDateTime): List<FullTreatmentWithNotifications>
+
+    @Query("UPDATE notifications SET takenAt = :takenAt WHERE id = :notificationId AND :takenAt >= time")
+    suspend fun updateTakenAt(notificationId: String, takenAt: LocalDateTime)
+
 }

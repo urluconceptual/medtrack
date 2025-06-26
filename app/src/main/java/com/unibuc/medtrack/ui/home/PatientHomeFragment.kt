@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
 import java.util.Locale
+import kotlin.math.log
 
 @AndroidEntryPoint
 class PatientHomeFragment : Fragment() {
@@ -127,8 +128,13 @@ class PatientHomeFragment : Fragment() {
     private fun bindTreatmentsToUI(treatmentsWithNotifications: List<FullTreatmentWithNotifications>) {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.treatments_recycler)
         recyclerView?.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView?.adapter = TreatmentAdapter(treatmentsWithNotifications)
+
+        recyclerView?.adapter = TreatmentAdapter(treatmentsWithNotifications) { notificationId ->
+            Log.i("PatientHomeFragment", "trigger mark notifications");
+            viewModel.markNotificationAsTaken(notificationId)
+        }
     }
+
 
 
 }

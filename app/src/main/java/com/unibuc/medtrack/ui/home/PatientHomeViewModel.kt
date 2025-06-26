@@ -23,6 +23,7 @@ import kotlinx.coroutines.withContext
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -115,4 +116,18 @@ class PatientHomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun markNotificationAsTaken(notificationId: String) {
+        Log.i("PatientHomeViewModel", "Entered mark notification as taken: " + notificationId)
+        viewModelScope.launch {
+            try {
+                notificationsRepository.updateTakenAt(notificationId, LocalDateTime.now())
+                fetchTodayNotifications()
+            } catch (e: Exception) {
+                Log.e("PatientHomeViewModel", "Error updating takenAt", e)
+                _error.value = "Failed to update notification: ${e.message}"
+            }
+        }
+    }
+
 }
