@@ -15,6 +15,13 @@ interface UsersDAO {
     @Query("""
         SELECT *
         FROM users
+        WHERE id = :id
+    """)
+    suspend fun getById(id: String): UserModel?
+
+    @Query("""
+        SELECT *
+        FROM users
     """)
     suspend fun getAll(): List<UserModel>
 

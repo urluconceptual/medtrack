@@ -7,6 +7,7 @@
     <dimen name="bottom_margin">16dp</dimen>
     <dimen name="h1_size">30sp</dimen>
     <dimen name="h2_size">24sp</dimen>
+    <dimen name="h3_size">20sp</dimen>
     <dimen name="regular_text_size">18sp</dimen>
     <dimen name="small_text_size">13sp</dimen>
     <dimen name="day_container_height">70dp</dimen>

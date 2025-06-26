@@ -12,6 +12,8 @@ import com.unibuc.medtrack.data.models.UserType
 class UsersRepositoryLocal(val dao: UsersDAO, val doctorDAO: DoctorsDAO, val patientsDAO: PatientsDAO): UsersRepository {
     override suspend fun insert(users: UserModel) = dao.insert(users)
     override suspend fun getAll(): List<UserModel> = dao.getAll()
+    override suspend fun getById(id: String): UserModel? = dao.getById(id)
+
     override suspend fun getByEmail(email: String): UserModel? = dao.getByEmail(email)
     override suspend fun checkEmailAndPassword(email: String, password: String): Boolean {
         return dao.checkEmailAndPassword(email, password) != null

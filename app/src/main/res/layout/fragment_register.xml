@@ -58,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/list_small_dist"
+            android:textColor="@color/black"
             android:text="@string/full_name"
             android:textSize="@dimen/regular_text_size" />
 
@@ -78,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/list_small_dist"
             android:text="@string/email"
+            android:textColor="@color/black"
             android:textSize="@dimen/regular_text_size" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -98,6 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/list_small_dist"
             android:text="@string/password"
+            android:textColor="@color/black"
             android:textSize="@dimen/regular_text_size" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -118,6 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/list_small_dist"
             android:text="@string/account_type"
+            android:textColor="@color/black"
             android:textSize="@dimen/regular_text_size" />
 
         <RadioGroup
@@ -131,15 +135,13 @@
                 android:id="@+id/radioOptionDoctor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/doctor"
-                android:textSize="@dimen/regular_text_size" />
+                android:text="@string/doctor" />
 
             <RadioButton
                 android:id="@+id/radioOptionPatient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/patient"
-                android:textSize="@dimen/regular_text_size" />
+                android:text="@string/patient" />
 
         </RadioGroup>
 
@@ -163,6 +165,7 @@
                 android:id="@+id/existing_account_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="@string/go_to_login" />
 
             <TextView

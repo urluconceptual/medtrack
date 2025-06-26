@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
@@ -17,6 +18,7 @@ import com.unibuc.medtrack.R
 import com.unibuc.medtrack.data.models.SignUpResponse
 import com.unibuc.medtrack.data.models.UserType
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.content.ContextCompat
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -37,6 +39,14 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setupListeners() {
+        val radioGroup = requireView().findViewById<RadioGroup>(R.id.radioGroup)
+        val tintList = ContextCompat.getColorStateList(requireContext(), R.color.radio_button_tint)
+        for (i in 0 until radioGroup.childCount) {
+            val child = radioGroup.getChildAt(i)
+            if (child is RadioButton) {
+                child.buttonTintList = tintList
+            }
+        }
         requireView().findViewById<TextView>(R.id.login_text).setOnClickListener {
             goToLoginFragment()
         }

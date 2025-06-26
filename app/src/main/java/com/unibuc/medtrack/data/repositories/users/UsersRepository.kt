@@ -7,6 +7,7 @@ import com.unibuc.medtrack.data.models.UserModel
 interface UsersRepository {
     suspend fun insert(users: UserModel)
     suspend fun getAll(): List<UserModel>
+    suspend fun getById(id: String): UserModel?
     suspend fun getByEmail(email: String): UserModel?
     suspend fun checkEmailAndPassword(email: String, password: String): Boolean
     suspend fun getFullDoctorProfileByEmail(email: String): FullDoctorProfile?
