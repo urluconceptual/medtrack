@@ -4,11 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.unibuc.medtrack.R
+import com.unibuc.medtrack.adapters.ChatsAdapterDoctorDtos
+import com.unibuc.medtrack.adapters.ChatsAdapterPatientDtos
+import com.unibuc.medtrack.data.models.UserType
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PatientChatsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -16,38 +23,64 @@ class PatientChatsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_patient_chats, container, false)
 
+    private lateinit var recyclerView: RecyclerView
+    private val viewModel: PatientChatsViewModel by viewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupData()
-        setupListeners()
+        setupRecycler()
+        viewModel.loadDtos()
+        observeViewModel()
     }
 
-    private fun setupListeners() {
-        val chatButtons = findAllViewsWithTag(requireView(), "chat_button")
-        for (chatButton in chatButtons)
-            chatButton.setOnClickListener {
-                goToChatConversationPage()
-            }
+    private fun setupRecycler() {
+        recyclerView = requireView().findViewById(R.id.chatsRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    fun findAllViewsWithTag(root: View, tag: Any): List<View> {
-        val result = mutableListOf<View>()
-        if (root.tag == tag) result.add(root)
-        if (root is ViewGroup) {
-            for (i in 0 until root.childCount) {
-                result.addAll(findAllViewsWithTag(root.getChildAt(i), tag))
+    private fun observeViewModel() {
+        viewModel.myRole.observe(viewLifecycleOwner) { role ->
+            when (role) {
+                UserType.PATIENT -> {
+                    observePatientViewModel()
+                }
+                UserType.DOCTOR -> {
+                    observeDoctorViewModel()
+                }
+                else -> {}
             }
         }
-        return result
+    }
+    private fun observePatientViewModel() {
+        viewModel.doctorDtos.observe(viewLifecycleOwner) { doctorDtos ->
+            recyclerView.adapter = ChatsAdapterDoctorDtos(doctorDtos) { doctorDto ->
+                goToPatientChatConversationPage(doctorDto.userId, doctorDto.name, doctorDto.specialty)
+            }
+        }
+    }
+    private fun observeDoctorViewModel() {
+        viewModel.patientDtos.observe(viewLifecycleOwner) { patientDtos ->
+            recyclerView.adapter = ChatsAdapterPatientDtos(patientDtos) { patientDto ->
+                goToDoctorChatConversationPage(patientDto.userId, patientDto.name, patientDto.dateOfBirth)
+            }
+        }
     }
 
-    private fun setupData() {
-
+    private fun goToPatientChatConversationPage(doctorId: String, doctorName: String, doctorSpecialty: String) {
+        val bundle = Bundle().apply {
+            putString("doctorId", doctorId)
+            putString("doctorName", doctorName)
+            putString("doctorSpecialty", doctorSpecialty)
+        }
+        findNavController().navigate(R.id.patientChatConversationFragment, bundle)
     }
-
-    private fun goToChatConversationPage() {
-        val action = PatientChatsFragmentDirections.actionPatientChatsFragmentToPatientChatConversationFragment()
-        findNavController().navigate(action)
+    private fun goToDoctorChatConversationPage(patientId: String, patientName: String, patientDateOfBirth: String) {
+        val bundle = Bundle().apply {
+            putString("patientId", patientId)
+            putString("patientName", patientName)
+            putString("patientDateOfBirth", patientDateOfBirth)
+        }
+        findNavController().navigate(R.id.doctorChatConversationFragment, bundle)
     }
 
 }

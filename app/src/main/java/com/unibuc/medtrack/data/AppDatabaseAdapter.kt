@@ -2,12 +2,14 @@ package com.unibuc.medtrack.data
 
 import android.content.Context
 import androidx.room.Room
+import com.unibuc.medtrack.data.repositories.chat_messages.ChatMessagesRepository
 import com.unibuc.medtrack.data.repositories.users.UsersRepository
 import com.unibuc.medtrack.data.repositories.users.UsersRepositoryLocal
 import com.unibuc.medtrack.data.repositories.doctors.DoctorsRepository
 import com.unibuc.medtrack.data.repositories.doctors.DoctorsRepositoryLocal
 import com.unibuc.medtrack.data.repositories.patients.PatientsRepository
 import com.unibuc.medtrack.data.repositories.patients.PatientsRepositoryLocal
+import com.unibuc.medtrack.data.repositories.chat_messages.ChatMessagesRepositoryLocal
 import com.unibuc.medtrack.data.repositories.treatments.TreatmentRepositoryLocal
 import com.unibuc.medtrack.data.repositories.treatments.TreatmentsRepository
 import dagger.Module
@@ -43,6 +45,10 @@ class AppDatabaseAdapter {
     @Provides
     @Singleton
     fun providePatientsRepository(appDatabase: AppDatabase): PatientsRepository = PatientsRepositoryLocal(appDatabase.patientsDao)
+
+    @Provides
+    @Singleton
+    fun provideChatMessagesRepository(appDatabase: AppDatabase): ChatMessagesRepository = ChatMessagesRepositoryLocal(appDatabase.chatMessageDao)
 
     @Provides
     @Singleton

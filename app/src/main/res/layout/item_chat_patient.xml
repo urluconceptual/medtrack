@@ -60,7 +60,7 @@
                     android:textColor="@color/accent_blue"/>
 
                 <TextView
-                    android:id="@+id/dose"
+                    android:id="@+id/specialty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Dermato-Endocrinology" />
