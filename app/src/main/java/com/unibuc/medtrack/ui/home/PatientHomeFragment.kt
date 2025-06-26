@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unibuc.medtrack.R
+import com.unibuc.medtrack.data.models.FullTreatmentWithNotifications
 import com.unibuc.medtrack.data.models.TreatmentModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -30,7 +31,6 @@ class PatientHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_patient_home, container, false)
 
-    private val userViewModel: PatientHomeViewModel by viewModels()
     private val viewModel: PatientHomeViewModel by viewModels()
 
 
@@ -48,8 +48,8 @@ class PatientHomeFragment : Fragment() {
 
     private fun setupGreeting() {
         val greetingTextView = requireView().findViewById<TextView>(R.id.greeting_text)
-        userViewModel.loadUserName()
-        userViewModel.userName.observe(viewLifecycleOwner) { name ->
+        viewModel.loadUserName()
+        viewModel.userName.observe(viewLifecycleOwner) { name ->
             greetingTextView.text = "Hello, $name!"
         }
     }
@@ -106,11 +106,11 @@ class PatientHomeFragment : Fragment() {
     }
 
     private fun fetchTreatments() {
-        Log.i("PatientHomeFragment", "registering observers")
+        Log.i("PatientHomeFragment", "Registering observers")
 
-        viewModel.treatments.observe(viewLifecycleOwner) { treatmentList ->
-            Log.i("PatientHomeFragment", "full treatment list: $treatmentList")
-            bindTreatmentsToUI(treatmentList)
+        viewModel.todaysNotifications.observe(viewLifecycleOwner) { fullTreatmentList ->
+            Log.i("PatientHomeFragment", "Today's treatments with notifications: $fullTreatmentList")
+            bindTreatmentsToUI(fullTreatmentList)
         }
 
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
@@ -119,16 +119,15 @@ class PatientHomeFragment : Fragment() {
             }
         }
 
-        Log.i("PatientHomeFragment", "calling fetchFullTreatmentsForPatient()")
-        viewModel.fetchFullTreatmentDetails()
+        Log.i("PatientHomeFragment", "Calling fetchTodayNotifications()")
+        viewModel.fetchTodayNotifications()
     }
 
-
-
-    private fun bindTreatmentsToUI(treatments: List<TreatmentModel>) {
+    private fun bindTreatmentsToUI(treatmentsWithNotifications: List<FullTreatmentWithNotifications>) {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.treatments_recycler)
         recyclerView?.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView?.adapter = TreatmentAdapter(treatments)
+        recyclerView?.adapter = TreatmentAdapter(treatmentsWithNotifications)
     }
+
 
 }
