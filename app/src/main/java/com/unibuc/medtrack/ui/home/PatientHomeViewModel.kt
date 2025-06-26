@@ -6,27 +6,29 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.unibuc.medtrack.data.SessionManager
-import com.unibuc.medtrack.data.models.TreatmentModel
-import com.unibuc.medtrack.data.repositories.treatments.TreatmentsRepository
+import com.unibuc.medtrack.data.models.FullTreatmentWithNotifications
+import com.unibuc.medtrack.data.repositories.notifications.NotificationsRepository
 import com.unibuc.medtrack.data.repositories.users.UsersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class PatientHomeViewModel @Inject constructor(
     private val usersRepository: UsersRepository,
     private val sessionManager: SessionManager,
-    private val treatmentsRepository: TreatmentsRepository
+    private val notificationsRepository: NotificationsRepository
 ) : ViewModel() {
 
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> get() = _userName
     val email = sessionManager.getUserEmail()
-    private val _treatments = MutableLiveData<List<TreatmentModel>>()
-    val treatments: LiveData<List<TreatmentModel>> = _treatments
+    private val _todaysNotifications = MutableLiveData<List<FullTreatmentWithNotifications>>()
+    val todaysNotifications: LiveData<List<FullTreatmentWithNotifications>> = _todaysNotifications
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
@@ -42,21 +44,19 @@ class PatientHomeViewModel @Inject constructor(
         }
     }
 
-    fun fetchFullTreatmentDetails() {
-        val patientId = sessionManager.getUserId()
-        if (patientId.isNullOrBlank()) {
-            _error.value = "Patient ID not found"
-            return
-        }
+    fun fetchTodayNotifications() {
+        val patientId = sessionManager.getUserId() ?: return
 
         viewModelScope.launch {
             try {
-                val data = treatmentsRepository.getByPatientId(patientId)
-                Log.i("PatientCalendarVM", "Full treatments: $data")
-                _treatments.value = data
+                val today = LocalDateTime.now()
+                val result = notificationsRepository.getTodayNotificationsWithTreatment(patientId, today)
+                Log.i("PatientHomeViewModel", "result: " + result)
+                Log.i("PatientHomeViewModel", "all notif: " + notificationsRepository.getAll())
+                _todaysNotifications.value = result
             } catch (e: Exception) {
                 Log.e("PatientCalendarVM", "Error fetching full treatments", e)
-                _error.value = "Failed to load full treatments: ${e.message ?: "Unknown error"}"
+                _error.value = "Failed to fetch notifications: ${e.message}"
             }
         }
     }

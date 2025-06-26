@@ -15,4 +15,10 @@ class Converters {
     fun localDateTimeToTimestamp(date: LocalDateTime?): Long? {
         return date?.atZone(ZoneId.systemDefault())?.toInstant()?.toEpochMilli()
     }
+
+    @TypeConverter
+    fun fromLocalDateTime(date: LocalDateTime): String = date.toString()
+
+    @TypeConverter
+    fun toLocalDateTime(value: String): LocalDateTime = LocalDateTime.parse(value)
 }
