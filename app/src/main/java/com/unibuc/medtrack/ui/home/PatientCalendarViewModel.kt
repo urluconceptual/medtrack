@@ -21,7 +21,7 @@ import javax.inject.Inject
 import kotlin.math.max
 
 @HiltViewModel
-class PatientHomeViewModel @Inject constructor(
+class PatientCalendarViewModel @Inject constructor(
     private val usersRepository: UsersRepository,
     private val sessionManager: SessionManager,
     private val treatmentsRepository: TreatmentsRepository
@@ -35,19 +35,7 @@ class PatientHomeViewModel @Inject constructor(
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-
-    fun loadUserName() {
-        if (email != null) {
-            viewModelScope.launch {
-                val name = withContext(Dispatchers.IO) {
-                    usersRepository.getByEmail(email)?.name ?: ""
-                }
-                _userName.value = name
-            }
-        }
-    }
-
-    fun fetchFullTreatmentDetails() {
+    fun fetchFullTreatmentDetails(date: Calendar) {
         val patientId = sessionManager.getUserId()
         if (patientId.isNullOrBlank()) {
             _error.value = "Patient ID not found"
@@ -57,9 +45,6 @@ class PatientHomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val data = treatmentsRepository.getByPatientId(patientId)
-                Log.i("PatientCalendarVM", "Full treatments: $data")
-
-                val date = Calendar.getInstance()
 
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                 val targetDate = LocalDate.of(
@@ -82,7 +67,7 @@ class PatientHomeViewModel @Inject constructor(
                     (daysBetween % doseIntervalDays == 0L)
                 }
 
-                Log.i("PatientCalendarVM", "Filtered for today: $filteredData")
+                Log.i("PatientCalendarVM", "Treatments on this day: $filteredData")
                 _treatments.value = filteredData
             } catch (e: Exception) {
                 Log.e("PatientCalendarVM", "Error fetching full treatments", e)
