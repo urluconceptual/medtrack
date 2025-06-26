@@ -10,6 +10,8 @@ import com.unibuc.medtrack.data.repositories.doctors.DoctorsRepositoryLocal
 import com.unibuc.medtrack.data.repositories.patients.PatientsRepository
 import com.unibuc.medtrack.data.repositories.patients.PatientsRepositoryLocal
 import com.unibuc.medtrack.data.repositories.chat_messages.ChatMessagesRepositoryLocal
+import com.unibuc.medtrack.data.repositories.doctor_patient.DoctorPatientRepository
+import com.unibuc.medtrack.data.repositories.doctor_patient.DoctorPatientRepositoryLocal
 import com.unibuc.medtrack.data.repositories.notifications.NotificationsRepository
 import com.unibuc.medtrack.data.repositories.notifications.NotificationsRepositoryLocal
 import com.unibuc.medtrack.data.repositories.treatments.TreatmentRepositoryLocal
@@ -59,4 +61,8 @@ class AppDatabaseAdapter {
     @Provides
     @Singleton
     fun provideNotificationsRepository(appDatabase: AppDatabase): NotificationsRepository = NotificationsRepositoryLocal(appDatabase.notificationsDAO)
+
+    @Provides
+    @Singleton
+    fun provideDoctorPatientRepository(appDatabase: AppDatabase): DoctorPatientRepository = DoctorPatientRepositoryLocal(appDatabase.doctorPatientDao)
 }

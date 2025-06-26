@@ -37,4 +37,6 @@ interface PatientsDAO {
 
     @Query("SELECT * FROM patients WHERE userId = :userId")
     suspend fun getPatientByUserId(userId: String): PatientModel?
+
+//    suspend fun getPatientByDoctorId(doctorId: String): PatientModel?
 } 

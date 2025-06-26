@@ -41,17 +41,17 @@
                 android:id="@+id/greeting_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/accent_blue"
                 android:text="@string/hello"
+                android:textColor="@color/accent_blue"
                 android:textSize="@dimen/h2_size" />
 
             <TextView
                 android:id="@+id/date_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/dummy_actual_date"
                 android:textColor="@color/accent_blue"
-                android:textSize="@dimen/regular_text_size"
-                android:text="@string/dummy_actual_date"/>
+                android:textSize="@dimen/regular_text_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -260,7 +260,47 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/treatments"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="12dp"
+                android:text="@string/your_patients"
+                android:textColor="@color/accent_blue"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/patients_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="74dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:padding="4dp"
+                android:paddingTop="12dp"
+                android:scrollbars="vertical" />
+        </LinearLayout>
     </LinearLayout>
-
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_patient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
+        android:layout_marginEnd="32dp"
+        app:backgroundTint="@color/secondary_blue"
+        app:srcCompat="@drawable/ic_plus"
+        app:tint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

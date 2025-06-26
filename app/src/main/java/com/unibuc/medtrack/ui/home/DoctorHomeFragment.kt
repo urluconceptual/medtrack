@@ -1,24 +1,32 @@
 package com.unibuc.medtrack.ui.home
 
+import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import com.unibuc.medtrack.R
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
 import java.util.Locale
-import androidx.navigation.fragment.findNavController
-import com.unibuc.medtrack.data.models.UserType
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.unibuc.medtrack.adapters.PatientAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @AndroidEntryPoint
 class DoctorHomeFragment : Fragment() {
@@ -29,6 +37,7 @@ class DoctorHomeFragment : Fragment() {
     ): View? = inflater.inflate(R.layout.fragment_doctor_home, container, false)
 
     private val userViewModel: DoctorHomeViewModel by viewModels()
+    private lateinit var patientAdapter: PatientAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,6 +48,48 @@ class DoctorHomeFragment : Fragment() {
         setupGreeting()
         setupCurrentDate()
         setupDaysOfTheWeek()
+        setupPatientList()
+        setupAddPatientButton()
+    }
+
+    private fun setupAddPatientButton() {
+        requireView().findViewById<FloatingActionButton>(R.id.add_patient).setOnClickListener {
+            val input = EditText(requireContext())
+            input.hint = "Enter patient email"
+
+            AlertDialog.Builder(requireContext())
+                .setTitle("Add Patient")
+                .setView(input)
+                .setPositiveButton("Add") { _, _ ->
+                    val email = input.text.toString().trim()
+                    if (email.isNotEmpty()) {
+                        userViewModel.viewModelScope.launch {
+                            val patient = withContext(Dispatchers.IO) {
+                                userViewModel.usersRepository.getByEmail(email)
+                            }
+                            if (patient != null) {
+                                userViewModel.addPatient(patient.id)
+                            } else {
+                                Toast.makeText(requireContext(), "Patient not found", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
+        }
+    }
+
+    private fun setupPatientList() {
+        patientAdapter = PatientAdapter(mutableListOf())
+        val recyclerView = requireView().findViewById<RecyclerView>(R.id.patients_recycler)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = patientAdapter
+
+        userViewModel.loadPatients()
+        userViewModel.patients.observe(viewLifecycleOwner) { patients ->
+            patientAdapter.updateData(patients)
+        }
     }
 
     private fun setupGreeting() {
