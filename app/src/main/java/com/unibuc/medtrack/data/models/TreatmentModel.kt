@@ -9,7 +9,7 @@ import java.util.UUID
     tableName = "treatments"
 )
 data class TreatmentModel(
-    @PrimaryKey val id: UUID,
+    @PrimaryKey val id: String,
     var doctorId: String,
     val patientId: String,
     val startDate: String,

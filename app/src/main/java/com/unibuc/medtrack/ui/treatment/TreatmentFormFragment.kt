@@ -67,7 +67,7 @@ class TreatmentFormFragment : Fragment() {
         view.findViewById<Button>(R.id.btn_save_treatment).setOnClickListener {
             if (validateForm()) {
                 val treatment = TreatmentModel(
-                    id = UUID.randomUUID(),
+                    id = UUID.randomUUID().toString(),
                     doctorId = "",
                     patientId = patientId,
                     startDate = startDateEdit.text.toString(),
