@@ -9,14 +9,27 @@
         android:id="@+id/doctorHomeFragment"
         android:name="com.unibuc.medtrack.ui.home.DoctorHomeFragment"
         android:label="Doctor Home"
-        tools:layout="@layout/fragment_doctor_home" />
+        tools:layout="@layout/fragment_doctor_home">
+        <action
+            android:id="@+id/action_doctorHomeFragment_to_doctorPatientTreatmentFragment"
+            app:destination="@id/doctorPatientTreatmentFragment" />
         <action
             android:id="@+id/action_doctorHomeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
             android:id="@+id/action_doctorHomeFragment_to_doctorChatsFragment"
             app:destination="@id/doctorChatsFragment" />
-
+    </fragment>
+    <fragment
+        android:id="@+id/doctorPatientTreatmentFragment"
+        android:name="com.unibuc.medtrack.ui.home.DoctorPatientTreatmentFragment">
+        <argument
+            android:name="patientId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_doctorPatientTreatmentFragment_to_doctorHomeFragment"
+            app:destination="@id/doctorHomeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/doctorChatsFragment"
         android:name="com.unibuc.medtrack.ui.home.PatientChatsFragment"
