@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import com.unibuc.medtrack.R
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,8 +57,13 @@ class DoctorPatientTreatmentFragment : Fragment() {
     }
 
     private fun setupAddTreatmentButton() {
-        requireView().findViewById<FloatingActionButton>(R.id.add_treatment_button).setOnClickListener {
+        val patientId = arguments?.getString("patientId") ?: return
 
+        requireView().findViewById<FloatingActionButton>(R.id.add_treatment_button).setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("patientId", patientId)
+            }
+            findNavController().navigate(R.id.action_doctorPatientTreatmentFragment_to_treatmentFormFragment, bundle)
         }
     }
 }
