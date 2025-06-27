@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import com.unibuc.medtrack.R
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -81,14 +82,19 @@ class DoctorHomeFragment : Fragment() {
     }
 
     private fun setupPatientList() {
-        patientAdapter = PatientAdapter(mutableListOf())
+
         val recyclerView = requireView().findViewById<RecyclerView>(R.id.patients_recycler)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = patientAdapter
 
         userViewModel.loadPatients()
         userViewModel.patients.observe(viewLifecycleOwner) { patients ->
-            patientAdapter.updateData(patients)
+            patientAdapter = PatientAdapter(patients) { patient ->
+                val bundle = Bundle().apply {
+                    putString("patientId", patient.id)
+                }
+                findNavController().navigate(R.id.action_doctorHomeFragment_to_doctorPatientTreatmentFragment, bundle)
+            }
+            recyclerView.adapter = patientAdapter
         }
     }
 

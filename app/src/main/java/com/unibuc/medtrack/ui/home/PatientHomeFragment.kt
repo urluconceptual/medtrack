@@ -1,6 +1,5 @@
 package com.unibuc.medtrack.ui.home
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
@@ -16,14 +15,13 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unibuc.medtrack.R
+import com.unibuc.medtrack.adapters.TreatmentAdapter
 import com.unibuc.medtrack.data.models.FullTreatmentWithNotifications
-import com.unibuc.medtrack.data.models.TreatmentModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
 import java.util.Locale
-import kotlin.math.log
 
 @AndroidEntryPoint
 class PatientHomeFragment : Fragment() {

@@ -78,7 +78,12 @@
                         android:textColor="@android:color/black"
                         android:textStyle="normal" />
                 </LinearLayout>
-
+                <ImageView
+                    android:id="@+id/alarmclock"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:tint="@color/primary_blue"
+                    android:src="@drawable/baseline_edit_square_24"/>
             </LinearLayout>
         </LinearLayout>
 
