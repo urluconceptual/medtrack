@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:hintEnabled="true"
-                android:hint="Full Name">
+                android:hint="@string/full_name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_doctor_name"
@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Specialty">
+                android:hint="@string/specialty">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_doctor_specialty"
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:hint="Email">
+                android:hint="@string/email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_doctor_email"
@@ -89,7 +89,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="184dp"
                 android:backgroundTint="@color/primary_blue"
-                android:text="Save Profile" />
+                android:text="@string/save_profile" />
 
             <Button
                 android:id="@+id/login_button_form"

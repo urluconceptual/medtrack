@@ -16,6 +16,16 @@
         <item name="cursorColor">@color/black</item>
     </style>
 
+    <style name="CustomSpinnerOutline" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@color/light_blue</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:popupBackground">@color/light_blue</item>
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:dropDownSelector">@color/black</item>
+
+    </style>
+
     <style name="MedTrack.Tabbar" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/accent_blue</item>
     </style>

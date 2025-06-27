@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_doctorPatientTreatmentFragment_to_doctorHomeFragment"
             app:destination="@id/doctorHomeFragment" />
+        <action
+            android:id="@+id/action_doctorPatientTreatmentFragment_to_treatmentFormFragment"
+            app:destination="@id/treatmentFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/doctorChatsFragment"
@@ -55,6 +58,16 @@
             android:id="@+id/action_doctorChatConversationFragment_to_doctorChatsFragment"
             app:destination="@id/doctorChatsFragment" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/treatmentFormFragment"
+        android:name="com.unibuc.medtrack.ui.treatment.TreatmentFormFragment"
+        android:label="Treatment Form"
+        tools:layout="@layout/fragment_treatment_form">
+
+        <action
+            android:id="@+id/action_treatmentFormFragment_to_doctorPatientTreatmentFragment"
+            app:destination="@id/doctorPatientTreatmentFragment" />
     </fragment>
 
     <fragment

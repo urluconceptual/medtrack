@@ -7,14 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.unibuc.medtrack.data.SessionManager
 import com.unibuc.medtrack.data.models.LoginResponse
-import com.unibuc.medtrack.data.models.UserModel
 import com.unibuc.medtrack.data.models.UserType
 import com.unibuc.medtrack.data.repositories.users.UsersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
