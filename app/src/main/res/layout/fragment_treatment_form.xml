@@ -46,20 +46,35 @@
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/treatment_dose"
-        style="@style/CustomTextInputOutline"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:hint="@string/dose">
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_treatment_dose"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/CustomTextInputOutline"
+            android:id="@+id/treatment_dosage"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_weight="2"
+            android:hint="@string/dose">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_treatment_dosage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:inputType="numberDecimal"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/dosage_unit_spinner"
+            style="@style/CustomSpinnerOutline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/interval"
@@ -88,7 +103,8 @@
             android:id="@+id/input_start_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="none"
+            android:focusable="false" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -103,7 +119,8 @@
             android:id="@+id/input_end_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="none"
+            android:focusable="false" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -111,7 +128,16 @@
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/primary_blue"
         android:text="@string/save" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/secondary_blue"
+        android:text="@string/cancel" />
 </LinearLayout>
