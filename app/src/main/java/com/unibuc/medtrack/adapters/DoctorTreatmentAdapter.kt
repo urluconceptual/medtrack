@@ -19,6 +19,7 @@ class DoctorTreatmentAdapter(
     inner class TreatmentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.name)
         val dose: TextView = view.findViewById(R.id.dose)
+        val description: TextView = view.findViewById(R.id.description)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TreatmentViewHolder {
@@ -34,6 +35,7 @@ class DoctorTreatmentAdapter(
 
         holder.name.text = treatment.medicineName
         holder.dose.text = "${treatment.dosage} ${treatment.dosageUnit} every ${treatment.dose_interval}h"
+        holder.description.text = treatment.description
     }
 
     override fun getItemCount(): Int = treatments.size
