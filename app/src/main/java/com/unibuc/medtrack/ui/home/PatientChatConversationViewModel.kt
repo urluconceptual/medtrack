@@ -1,5 +1,6 @@
 package com.unibuc.medtrack.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,7 @@ import com.unibuc.medtrack.data.models.UserType
 import com.unibuc.medtrack.data.repositories.chat_messages.ChatMessagesRepository as ChatMessagesDataRepository
 import com.unibuc.medtrack.networking.repositories.ChatMessagesRepository as ChatMessagesAPIRepository
 import com.unibuc.medtrack.data.repositories.users.UsersRepository
+import com.unibuc.medtrack.networking.models.ChatMessagesAPISendRequestModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -83,6 +85,19 @@ class PatientChatConversationViewModel @Inject constructor(
                     timeSent = now)
 
                 chatMessagesRepository.insert(chatMessage)
+
+                val response = withContext(Dispatchers.IO) {
+                    ChatMessagesAPIRepository.sendChatMessages(
+                        ChatMessagesAPISendRequestModel(
+                            chatMessage.id,
+                            chatMessage.senderId,
+                            chatMessage.receiverId,
+                            chatMessage.message,
+                            chatMessage.timeSent
+                        )
+                    )
+                }
+                Log.i("PatientChatConversationViewModel", "Response sending message to Py: " + response)
 
                 loadMessageDtos(_otherId.value!!)
             }

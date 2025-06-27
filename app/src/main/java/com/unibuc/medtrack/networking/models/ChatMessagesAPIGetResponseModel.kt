@@ -2,6 +2,6 @@ package com.unibuc.medtrack.networking.models
 
 import com.unibuc.medtrack.data.models.ChatMessageModel
 
-data class ChatMessagesAPIResponseModel(
+data class ChatMessagesAPIGetResponseModel(
     val data: List<ChatMessageModel>
 )
