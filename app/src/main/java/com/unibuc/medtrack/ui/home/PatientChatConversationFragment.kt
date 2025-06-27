@@ -106,8 +106,7 @@ class PatientChatConversationFragment : Fragment() {
     }
 
     private fun goToChatsPage() {
-        val action = PatientChatConversationFragmentDirections.actionDoctorChatConversationFragmentToDoctorChatsFragment()
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.action_doctorChatConversationFragment_to_doctorChatsFragment)
     }
 
     private fun sendChatMessage() {

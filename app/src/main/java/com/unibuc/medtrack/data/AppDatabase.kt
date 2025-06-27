@@ -28,7 +28,7 @@ import com.unibuc.medtrack.data.models.TreatmentModel
         NotificationModel::class,
         DoctorPatientModel::class
     ],
-    version = 7
+    version = 8
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

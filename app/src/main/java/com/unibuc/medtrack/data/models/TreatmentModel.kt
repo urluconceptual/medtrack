@@ -10,7 +10,7 @@ import java.util.UUID
 )
 data class TreatmentModel(
     @PrimaryKey val id: UUID,
-    val doctorId: String,
+    var doctorId: String,
     val patientId: String,
     val startDate: String,
     val endDate: String,
