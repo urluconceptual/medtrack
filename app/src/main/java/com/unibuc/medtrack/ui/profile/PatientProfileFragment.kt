@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.unibuc.medtrack.R
@@ -82,6 +83,11 @@ class PatientProfileFragment : Fragment(R.layout.fragment_patient_profile) {
 
         Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
 
-        findNavController().navigate(R.id.action_patientHomeFragment_to_loginFragment)
+        findNavController().navigate(
+            R.id.action_patientHomeFragment_to_loginFragment,
+            null,
+            NavOptions.Builder()
+                      .setPopUpTo(R.id.authentication_navigation, true)
+                      .build())
     }
 }

@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -83,7 +84,12 @@ class DoctorProfileFragment : Fragment(R.layout.fragment_doctor_profile) {  // m
 
         Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
 
-        findNavController().navigate(R.id.action_doctorHomeFragment_to_loginFragment)
+        findNavController().navigate(
+            R.id.action_doctorHomeFragment_to_loginFragment,
+            null,
+            NavOptions.Builder()
+                      .setPopUpTo(R.id.authentication_navigation, true)
+                      .build())
     }
 
 
