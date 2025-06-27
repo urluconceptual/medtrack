@@ -11,6 +11,7 @@ import com.unibuc.medtrack.data.models.DoctorUserDTO
 import com.unibuc.medtrack.data.models.PatientUserDTO
 import com.unibuc.medtrack.data.models.UserType
 import com.unibuc.medtrack.data.repositories.chat_messages.ChatMessagesRepository
+import com.unibuc.medtrack.data.repositories.doctor_patient.DoctorPatientRepository
 import com.unibuc.medtrack.data.repositories.doctors.DoctorsRepository
 import com.unibuc.medtrack.data.repositories.patients.PatientsRepository
 import com.unibuc.medtrack.data.repositories.users.UsersRepository
@@ -24,6 +25,7 @@ import javax.inject.Inject
 class PatientChatsViewModel @Inject constructor(
     private val usersRepository: UsersRepository,
     private val chatMessagesRepository: ChatMessagesRepository,
+    private val doctorPatientRepository: DoctorPatientRepository,
     private val doctorsRepository: DoctorsRepository,
     private val patientsRepository: PatientsRepository,
     private val sessionManager: SessionManager
@@ -53,7 +55,7 @@ class PatientChatsViewModel @Inject constructor(
 
                 if (_myRole.value == UserType.PATIENT) {
                     val doctorIds = withContext(Dispatchers.IO) {
-                        chatMessagesRepository.getAllMyConversationUserIds(myId)
+                        doctorPatientRepository.getDoctorIdsForPatient(myId)
                     }!!
 
                     _doctorDtos.value = withContext(Dispatchers.IO) {
@@ -64,7 +66,7 @@ class PatientChatsViewModel @Inject constructor(
                 }
                 else if (_myRole.value == UserType.DOCTOR) {
                     val patientIds = withContext(Dispatchers.IO) {
-                        chatMessagesRepository.getAllMyConversationUserIds(myId)
+                        doctorPatientRepository.getPatientIdsForDoctor(myId)
                     }!!
 
                     _patientDtos.value = withContext(Dispatchers.IO) {

@@ -5,29 +5,29 @@ app = Flask(__name__)
 
 #   SERVER UNDE SE DUC REQ. HTTP
 messages = [
-    {'id': '1000',
-     'senderId': 'DOCTOR-ID',
-     'receiverId': 'PATIENT-ID',
-     'message': 'Nu uitati sa va luati tratamentul la ora 18!',
-     'timeSent': '2025-05-24'},
-
-    {'id': '1001',
-     'senderId': 'PATIENT-ID',
-     'receiverId': 'DOCTOR-ID',
-     'message': 'Multumesc ca mi-ati amintit!',
-     'timeSent': '2025-05-24'},
-
-    {'id': '1002',
-     'senderId': 'PATIENT-ID',
-     'receiverId': 'DOCTOR-ID',
-     'message': 'O zi buna!',
-     'timeSent': '2025-05-24'},
-
-    {'id': '1003',
-     'senderId': 'DOCTOR-ID',
-     'receiverId': 'PATIENT-ID',
-     'message': 'Nu aveti pentru ce! O zi buna de asemenea!',
-     'timeSent': '2025-05-24'}
+    # {'id': '1000',
+    #  'senderId': 'DOCTOR-ID',
+    #  'receiverId': 'PATIENT-ID',
+    #  'message': 'Nu uitati sa va luati tratamentul la ora 18!',
+    #  'timeSent': '2025-05-24'},
+    #
+    # {'id': '1001',
+    #  'senderId': 'PATIENT-ID',
+    #  'receiverId': 'DOCTOR-ID',
+    #  'message': 'Multumesc ca mi-ati amintit!',
+    #  'timeSent': '2025-05-24'},
+    #
+    # {'id': '1002',
+    #  'senderId': 'PATIENT-ID',
+    #  'receiverId': 'DOCTOR-ID',
+    #  'message': 'O zi buna!',
+    #  'timeSent': '2025-05-24'},
+    #
+    # {'id': '1003',
+    #  'senderId': 'DOCTOR-ID',
+    #  'receiverId': 'PATIENT-ID',
+    #  'message': 'Nu aveti pentru ce! O zi buna de asemenea!',
+    #  'timeSent': '2025-05-24'}
 ]
 
 
