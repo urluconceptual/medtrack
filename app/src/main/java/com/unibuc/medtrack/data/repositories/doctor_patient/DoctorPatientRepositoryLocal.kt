@@ -9,4 +9,6 @@ class DoctorPatientRepositoryLocal(private val dao: DoctorPatientDao) : DoctorPa
     }
     override suspend fun getPatientIdsForDoctor(doctorId: String): List<String> =
         dao.getPatientIdsForDoctor(doctorId)
+    override suspend fun getDoctorIdsForPatient(patientId: String): List<String> =
+        dao.getDoctorIdsForPatient(patientId)
 }
