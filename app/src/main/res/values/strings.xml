@@ -50,4 +50,11 @@
     <string name="_08_00">08:00</string>
     <string name="_14_30">14:30</string>
     <string name="write_a_message">Write a message...</string>
+    <string name="medication_name">Medication Name</string>
+    <string name="add_treatment">Add treatment</string>
+    <string name="dose">Dose</string>
+    <string name="save">Save</string>
+    <string name="description">Description</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
 </resources>
