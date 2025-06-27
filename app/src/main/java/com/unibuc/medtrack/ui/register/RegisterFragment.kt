@@ -19,6 +19,7 @@ import com.unibuc.medtrack.data.models.SignUpResponse
 import com.unibuc.medtrack.data.models.UserType
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.core.content.ContextCompat
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -70,14 +71,22 @@ class RegisterFragment : Fragment() {
                     val tabbarFragment = requireActivity().findViewById<View>(R.id.tabbar_fragment)
                     tabbarFragment.visibility = View.VISIBLE
 
+                    val tabbarBNV = tabbarFragment.findViewById<BottomNavigationView>(R.id.tabbar)
+
                     val navOptions = NavOptions.Builder()
                         .setPopUpTo(R.id.authentication_navigation, inclusive = true)
                         .setLaunchSingleTop(true)
                         .build()
 
                     when (selectedUserType) {
-                        UserType.DOCTOR -> findNavController().navigate(R.id.doctor_navigation, null, navOptions)
-                        UserType.PATIENT -> findNavController().navigate(R.id.patient_navigation, null, navOptions)
+                        UserType.DOCTOR -> {
+                            tabbarBNV.menu.findItem(R.id.tabbar_calendar).setVisible(false)
+                            findNavController().navigate(R.id.doctor_navigation, null, navOptions)
+                        }
+                        UserType.PATIENT -> {
+                            tabbarBNV.menu.findItem(R.id.tabbar_calendar).setVisible(true)
+                            findNavController().navigate(R.id.patient_navigation, null, navOptions)
+                        }
                         else -> Toast.makeText(requireContext(), "Unknown user type", Toast.LENGTH_SHORT).show()
                     }
                 }

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.unibuc.medtrack.R
@@ -52,12 +53,16 @@ class LoginFragment: Fragment() {
                 val tabbarFragment = requireActivity().findViewById<View>(R.id.tabbar_fragment)
                 tabbarFragment.visibility = View.VISIBLE
 
+                val tabbarBNV = tabbarFragment.findViewById<BottomNavigationView>(R.id.tabbar)
+
                 when (role) {
                     UserType.DOCTOR -> {
+                        tabbarBNV.menu.findItem(R.id.tabbar_calendar).setVisible(false)
                         val action = LoginFragmentDirections.actionLoginFragmentToHomeGraphDoctor()
                         findNavController().navigate(action)
                     }
                     UserType.PATIENT -> {
+                        tabbarBNV.menu.findItem(R.id.tabbar_calendar).setVisible(true)
                         val action = LoginFragmentDirections.actionLoginFragmentToHomeGraphPatient()
                         findNavController().navigate(action)
                     }
